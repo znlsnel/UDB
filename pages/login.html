@@ -253,6 +253,42 @@
             font-size: 1.2rem;
         }
 
+        .kakao-btn-page {
+            width: 100%;
+            padding: 1rem;
+            background: #fee500;
+            color: #3c1e1e;
+            border: 2px solid #fee500;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .kakao-btn-page:hover {
+            background: #fdd835;
+            border-color: #fdd835;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(254, 229, 0, 0.3);
+        }
+
+        .kakao-btn-page:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .kakao-btn-page i {
+            color: #3c1e1e;
+            font-size: 1.2rem;
+        }
+
         .error-message-page {
             display: none;
             background: #fee;
@@ -412,11 +448,19 @@
                         <i class="fab fa-google"></i>
                         Google로 계속하기
                     </button>
+
+                    <button type="button" class="kakao-btn-page" id="kakaoSignInBtnPage">
+                        <i class="fas fa-comment"></i>
+                        카카오톡으로 계속하기
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 
+    <!-- Kakao SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
+    
     <!-- Firebase SDK -->
     <script type="module">
         // Firebase 모듈 import
@@ -439,6 +483,12 @@
         window.firebaseApp = app;
         window.auth = getAuth(app);
         window.db = getFirestore(app);
+        
+        // Kakao SDK 초기화 (실제 앱 키로 교체 필요)
+        if (window.Kakao) {
+            Kakao.init('your-kakao-app-key-here');
+            console.log('Kakao SDK initialized:', Kakao.isInitialized());
+        }
         
         console.log('Firebase initialized');
     </script>
@@ -493,6 +543,11 @@
                 // 구글 로그인
                 document.getElementById('googleSignInBtnPage').addEventListener('click', () => {
                     this.handleGoogleSignIn();
+                });
+
+                // 카카오톡 로그인
+                document.getElementById('kakaoSignInBtnPage').addEventListener('click', () => {
+                    this.handleKakaoSignIn();
                 });
             }
 
@@ -578,33 +633,66 @@
                 }
             }
 
+            async handleKakaoSignIn() {
+                this.showLoading(true, 'kakao');
+                this.clearMessages();
+
+                const result = await this.authManager.signInWithKakao();
+                
+                this.showLoading(false, 'kakao');
+
+                if (result.success) {
+                    this.showSuccess('카카오톡 로그인 성공!');
+                    // 카카오 사용자 정보를 전역에서 관리하므로 수동으로 상태 업데이트
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 2000);
+                } else {
+                    this.showError(result.error);
+                }
+            }
+
             showLoading(isLoading, type = 'form') {
+                const submitBtn = document.getElementById('authSubmitBtnPage');
+                const googleBtn = document.getElementById('googleSignInBtnPage');
+                const kakaoBtn = document.getElementById('kakaoSignInBtnPage');
+
                 if (type === 'form') {
-                    const submitBtn = document.getElementById('authSubmitBtnPage');
-                    const googleBtn = document.getElementById('googleSignInBtnPage');
-                    
                     if (isLoading) {
                         submitBtn.disabled = true;
                         googleBtn.disabled = true;
+                        kakaoBtn.disabled = true;
                         submitBtn.innerHTML = '<span class="spinner"></span> 처리중...';
                     } else {
                         submitBtn.disabled = false;
                         googleBtn.disabled = false;
+                        kakaoBtn.disabled = false;
                         const isSignUp = document.querySelector('.tab-btn-page.active').dataset.tab === 'signup';
                         submitBtn.textContent = isSignUp ? '회원가입' : '로그인';
                     }
                 } else if (type === 'google') {
-                    const googleBtn = document.getElementById('googleSignInBtnPage');
-                    const submitBtn = document.getElementById('authSubmitBtnPage');
-                    
                     if (isLoading) {
                         googleBtn.disabled = true;
                         submitBtn.disabled = true;
+                        kakaoBtn.disabled = true;
                         googleBtn.innerHTML = '<span class="spinner"></span> Google 로그인 중...';
                     } else {
                         googleBtn.disabled = false;
                         submitBtn.disabled = false;
+                        kakaoBtn.disabled = false;
                         googleBtn.innerHTML = '<i class="fab fa-google"></i> Google로 계속하기';
+                    }
+                } else if (type === 'kakao') {
+                    if (isLoading) {
+                        kakaoBtn.disabled = true;
+                        submitBtn.disabled = true;
+                        googleBtn.disabled = true;
+                        kakaoBtn.innerHTML = '<span class="spinner"></span> 카카오톡 로그인 중...';
+                    } else {
+                        kakaoBtn.disabled = false;
+                        submitBtn.disabled = false;
+                        googleBtn.disabled = false;
+                        kakaoBtn.innerHTML = '<i class="fas fa-comment"></i> 카카오톡으로 계속하기';
                     }
                 }
             }

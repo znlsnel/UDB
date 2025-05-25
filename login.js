@@ -71,6 +71,11 @@ class LoginManager {
                 <i class="fab fa-google"></i>
                 Google로 계속하기
               </button>
+
+              <button type="button" class="kakao-btn" id="kakaoSignInBtn">
+                <i class="fas fa-comment"></i>
+                카카오톡으로 계속하기
+              </button>
             </form>
             
             <div id="authError" class="error-message"></div>
@@ -114,6 +119,11 @@ class LoginManager {
     // 구글 로그인
     document.getElementById('googleSignInBtn').addEventListener('click', () => {
       this.handleGoogleSignIn();
+    });
+
+    // 카카오톡 로그인
+    document.getElementById('kakaoSignInBtn').addEventListener('click', () => {
+      this.handleKakaoSignIn();
     });
 
     // 로그아웃 버튼
@@ -209,6 +219,25 @@ class LoginManager {
 
     if (result.success) {
       this.hideModal();
+    } else {
+      this.showError(result.error);
+    }
+  }
+
+  // 카카오톡 로그인 처리
+  async handleKakaoSignIn() {
+    this.showLoading(true, 'kakao');
+    this.clearError();
+
+    const result = await this.authManager.signInWithKakao();
+    
+    this.showLoading(false, 'kakao');
+
+    if (result.success) {
+      this.hideModal();
+      // 카카오 사용자의 경우 수동으로 UI 업데이트
+      this.currentUser = result.user;
+      this.updateUIForLoggedInUser();
     } else {
       this.showError(result.error);
     }
@@ -360,19 +389,36 @@ class LoginManager {
   }
 
   // 로딩 상태 표시
-  showLoading(isLoading) {
+  showLoading(isLoading, type = 'form') {
     const submitBtn = document.getElementById('authSubmitBtn');
     const googleBtn = document.getElementById('googleSignInBtn');
+    const kakaoBtn = document.getElementById('kakaoSignInBtn');
     
-    if (isLoading) {
-      submitBtn.disabled = true;
-      googleBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 처리중...';
-    } else {
-      submitBtn.disabled = false;
-      googleBtn.disabled = false;
-      const isSignUp = document.querySelector('.tab-btn.active').dataset.tab === 'signup';
-      submitBtn.textContent = isSignUp ? '회원가입' : '로그인';
+    if (type === 'form') {
+      if (isLoading) {
+        submitBtn.disabled = true;
+        googleBtn.disabled = true;
+        kakaoBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 처리중...';
+      } else {
+        submitBtn.disabled = false;
+        googleBtn.disabled = false;
+        kakaoBtn.disabled = false;
+        const isSignUp = document.querySelector('.tab-btn.active').dataset.tab === 'signup';
+        submitBtn.textContent = isSignUp ? '회원가입' : '로그인';
+      }
+    } else if (type === 'kakao') {
+      if (isLoading) {
+        kakaoBtn.disabled = true;
+        submitBtn.disabled = true;
+        googleBtn.disabled = true;
+        kakaoBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 카카오톡 로그인 중...';
+      } else {
+        kakaoBtn.disabled = false;
+        submitBtn.disabled = false;
+        googleBtn.disabled = false;
+        kakaoBtn.innerHTML = '<i class="fas fa-comment"></i> 카카오톡으로 계속하기';
+      }
     }
   }
 

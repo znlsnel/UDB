@@ -117,11 +117,115 @@ class AuthManager {
     }
   }
 
+  // 카카오톡 로그인
+  async signInWithKakao() {
+    try {
+      if (!window.Kakao || !window.Kakao.isInitialized()) {
+        throw new Error('Kakao SDK가 초기화되지 않았습니다.');
+      }
+
+      // 카카오 로그인
+      const kakaoAuth = await new Promise((resolve, reject) => {
+        window.Kakao.Auth.login({
+          success: resolve,
+          fail: reject,
+          scope: 'profile_nickname,profile_image,account_email'
+        });
+      });
+
+      // 사용자 정보 가져오기
+      const kakaoUser = await new Promise((resolve, reject) => {
+        window.Kakao.API.request({
+          url: '/v2/user/me',
+          success: resolve,
+          fail: reject
+        });
+      });
+
+      // Firebase Custom Token 생성을 위한 사용자 정보
+      const userInfo = {
+        id: kakaoUser.id.toString(),
+        email: kakaoUser.kakao_account?.email || `kakao_${kakaoUser.id}@kakao.local`,
+        displayName: kakaoUser.kakao_account?.profile?.nickname || '카카오 사용자',
+        photoURL: kakaoUser.kakao_account?.profile?.profile_image_url || null,
+        provider: 'kakao'
+      };
+
+      // Firestore에 사용자 데이터 저장 (카카오 ID를 문서 ID로 사용)
+      const { doc, setDoc, getDoc, updateDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+      
+      const userId = `kakao_${userInfo.id}`;
+      const userDoc = await getDoc(doc(this.db, 'users', userId));
+      
+      if (!userDoc.exists()) {
+        await setDoc(doc(this.db, 'users', userId), {
+          email: userInfo.email,
+          displayName: userInfo.displayName,
+          photoURL: userInfo.photoURL,
+          provider: 'kakao',
+          kakaoId: userInfo.id,
+          progress: {},
+          bookmarks: [],
+          preferences: {
+            theme: 'light',
+            language: 'ko'
+          },
+          createdAt: new Date(),
+          lastLoginAt: new Date()
+        });
+      } else {
+        await updateDoc(doc(this.db, 'users', userId), {
+          lastLoginAt: new Date()
+        });
+      }
+
+      // 가상의 사용자 객체 생성 (Firebase User 형태로)
+      const virtualUser = {
+        uid: userId,
+        email: userInfo.email,
+        displayName: userInfo.displayName,
+        photoURL: userInfo.photoURL,
+        provider: 'kakao'
+      };
+
+      // 전역 상태에 사용자 정보 저장
+      window.currentKakaoUser = virtualUser;
+
+      return { success: true, user: virtualUser };
+    } catch (error) {
+      console.error('Kakao sign in error:', error);
+      return { success: false, error: this.getKakaoErrorMessage(error) };
+    }
+  }
+
+  // 카카오 로그아웃
+  async kakaoLogout() {
+    try {
+      if (window.Kakao && window.Kakao.isInitialized()) {
+        await new Promise((resolve) => {
+          window.Kakao.Auth.logout(resolve);
+        });
+      }
+      window.currentKakaoUser = null;
+      return { success: true };
+    } catch (error) {
+      console.error('Kakao logout error:', error);
+      return { success: false, error: error.message };
+    }
+  }
+
   // 로그아웃
   async logOut() {
     try {
+      // Firebase 로그아웃
       const { signOut } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
       await signOut(this.auth);
+      
+      // 카카오 로그아웃 (카카오 사용자인 경우)
+      if (window.currentKakaoUser) {
+        await this.kakaoLogout();
+      }
+      
       return { success: true };
     } catch (error) {
       console.error('Sign out error:', error);
@@ -221,6 +325,27 @@ class AuthManager {
     };
     
     return errorMessages[errorCode] || '알 수 없는 오류가 발생했습니다.';
+  }
+
+  // 카카오 에러 메시지 처리
+  getKakaoErrorMessage(error) {
+    if (typeof error === 'string') {
+      return error;
+    }
+    
+    if (error.error) {
+      const kakaoErrors = {
+        'access_denied': '사용자가 로그인을 취소했습니다.',
+        'invalid_request': '잘못된 요청입니다.',
+        'unauthorized_client': '인증되지 않은 클라이언트입니다.',
+        'server_error': '카카오 서버 오류가 발생했습니다.',
+        'temporarily_unavailable': '카카오 서비스가 일시적으로 사용할 수 없습니다.'
+      };
+      
+      return kakaoErrors[error.error] || error.error_description || '카카오 로그인 중 오류가 발생했습니다.';
+    }
+    
+    return error.message || '카카오 로그인 중 알 수 없는 오류가 발생했습니다.';
   }
 }
 
