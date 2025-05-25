@@ -309,15 +309,7 @@ class LoginManager {
         existingAuthBtn.remove();
       }
       
-      // 로그인 링크가 없으면 모달 버튼 추가
-      if (!loginNavLink) {
-        const loginBtn = `
-          <li class="nav-item auth-nav-item">
-            <button id="loginBtn" class="login-btn">로그인</button>
-          </li>
-        `;
-        navMenu.insertAdjacentHTML('beforeend', loginBtn);
-      }
+      // 로그인 링크가 이미 네비게이션에 있으므로 추가 버튼 생성하지 않음
     }
   }
 
