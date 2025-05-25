@@ -26,6 +26,12 @@
                     <li class="nav-item">
                         <a href="#contact" class="nav-link">문의</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="pages/login.html" class="nav-link login-nav-link">
+                            <i class="fas fa-sign-in-alt"></i>
+                            로그인
+                        </a>
+                    </li>
                 </ul>
                 <div class="hamburger">
                     <span class="bar"></span>
@@ -304,6 +310,38 @@
         </div>
     </footer>
 
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Firebase 모듈 import
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        
+        // Firebase 설정 (실제 값으로 교체 필요)
+        const firebaseConfig = {
+            apiKey: "your-api-key-here",
+            authDomain: "your-project.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "your-app-id-here"
+        };
+        
+        // Firebase 초기화
+        const app = initializeApp(firebaseConfig);
+        window.firebaseApp = app;
+        window.auth = getAuth(app);
+        window.db = getFirestore(app);
+        
+        console.log('Firebase initialized');
+    </script>
+    
+    <!-- Auth Manager -->
+    <script src="auth.js"></script>
+    
+    <!-- Login Manager -->
+    <script src="login.js"></script>
+    
     <script src="script.js"></script>
 </body>
 </html> 
