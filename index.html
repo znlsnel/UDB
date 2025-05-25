@@ -310,6 +310,9 @@
         </div>
     </footer>
 
+    <!-- Kakao SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
+    
     <!-- Firebase SDK -->
     <script type="module">
         // Firebase 모듈 import
@@ -332,6 +335,12 @@
         window.firebaseApp = app;
         window.auth = getAuth(app);
         window.db = getFirestore(app);
+        
+        // Kakao SDK 초기화 (실제 앱 키로 교체 필요)
+        if (window.Kakao) {
+            Kakao.init('your-kakao-app-key-here');
+            console.log('Kakao SDK initialized:', Kakao.isInitialized());
+        }
         
         console.log('Firebase initialized');
     </script>
