@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파티클 셰이더 - Unity Shader Programming Guide</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .content-page {
+            background: white;
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            line-height: 1.7;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .page-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        .back-button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        .content-section {
+            margin: 2rem 0;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        .subsection-title {
+            font-size: 1.4rem;
+            color: #667eea;
+            margin: 2rem 0 1rem 0;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .code-example {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            border: 1px solid #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .code-example .keyword {
+            color: #569cd6;
+            font-weight: 500;
+        }
+        .code-example .string {
+            color: #ce9178;
+        }
+        .code-example .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        .code-example .type {
+            color: #4ec9b0;
+        }
+        .code-example .number {
+            color: #b5cea8;
+        }
+        .code-example .property {
+            color: #9cdcfe;
+        }
+        .code-example .bracket {
+            color: #ffd700;
+        }
+        .code-example .function {
+            color: #dcdcaa;
+        }
+        .particle-demo {
+            background: radial-gradient(circle at center, #1a1a2e, #16213e, #0f3460);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .particle-demo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 2px, transparent 2px),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 40% 60%, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 50px 50px, 30px 30px, 70px 70px;
+            animation: sparkle 4s ease-in-out infinite;
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+        .particle-demo h3 {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .particle-demo p {
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .particle-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .feature-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .feature-card .feature-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .feature-card.basic .feature-badge {
+            background: #ff6b6b;
+        }
+        .feature-card.animation .feature-badge {
+            background: #4ecdc4;
+        }
+        .feature-card.blending .feature-badge {
+            background: #45b7d1;
+        }
+        .feature-card.distortion .feature-badge {
+            background: #96ceb4;
+        }
+        .feature-card.volumetric .feature-badge {
+            background: #feca57;
+        }
+        .feature-card.gpu .feature-badge {
+            background: #ff9ff3;
+        }
+        .blend-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .blend-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .blend-card .blend-visual {
+            width: 100%;
+            height: 60px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .blend-card.additive .blend-visual {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+        }
+        .blend-card.multiply .blend-visual {
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+        }
+        .blend-card.alpha .blend-visual {
+            background: linear-gradient(45deg, rgba(255,107,107,0.7), rgba(254,202,87,0.7));
+        }
+        .blend-card.screen .blend-visual {
+            background: linear-gradient(45deg, #96ceb4, #ff9ff3);
+        }
+        .blend-card h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .tip-box {
+            background: linear-gradient(135deg, #10b98120, #059f4620);
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box {
+            background: linear-gradient(135deg, #fbbf2420, #f5935420);
+            border-left: 4px solid #f59354;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .particle-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .type-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #cbd5e0;
+            text-align: center;
+        }
+        .type-card .type-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .type-card.fire .type-icon {
+            color: #ff6b6b;
+        }
+        .type-card.magic .type-icon {
+            color: #667eea;
+        }
+        .type-card.smoke .type-icon {
+            color: #6b7280;
+        }
+        .type-card.energy .type-icon {
+            color: #feca57;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            justify-content: center;
+        }
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        .nav-button.prev {
+            background: linear-gradient(135deg, #6b7280, #9ca3af);
+        }
+        .nav-button.prev:hover {
+            box-shadow: 0 8px 25px rgba(107, 114, 128, 0.3);
+        }
+        .nav-button.home {
+            background: linear-gradient(135deg, #10b981, #059f46);
+        }
+        .nav-button.home:hover {
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-cube"></i>
+                    <span>Unity Shader Programming</span>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../index.html#about" class="nav-link">소개</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../index.html#contact" class="nav-link">문의</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="content-page">
+        <div class="content-container">
+            <a href="../index.html#table-of-contents" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                목차로 돌아가기
+            </a>
+            
+            <div class="page-header">
+                <h1 class="page-title">파티클 셰이더</h1>
+                <p class="page-subtitle">동적이고 화려한 시각 효과의 핵심</p>
+            </div>
+
+            <div class="particle-demo">
+                <h3>✨ 파티클의 마법</h3>
+                <p>불, 연기, 마법, 폭발 등 모든 동적 효과를 만드는 파티클 셰이더의 세계</p>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🎆 파티클 셰이더의 핵심 요소</h2>
+                
+                <p><strong>파티클 셰이더</strong>는 게임에서 가장 화려하고 동적인 시각 효과를 만드는 핵심 기술입니다. 불, 연기, 마법, 폭발, 날씨 효과 등 모든 것을 표현할 수 있습니다.</p>
+
+                <div class="particle-features">
+                    <div class="feature-card basic">
+                        <div class="feature-badge">Basic</div>
+                        <h4><i class="fas fa-circle"></i> 기본 파티클</h4>
+                        <p><strong>빌보드 렌더링:</strong> 항상 카메라를 향하는 스프라이트</p>
+                        <p><strong>텍스처 애니메이션:</strong> 프레임 기반 애니메이션</p>
+                        <p><strong>색상 변화:</strong> 생명주기별 색상 그라디언트</p>
+                        <p><strong>크기 조절:</strong> 시간에 따른 스케일 변화</p>
+                    </div>
+                    
+                    <div class="feature-card animation">
+                        <div class="feature-badge">Animation</div>
+                        <h4><i class="fas fa-play"></i> 애니메이션 효과</h4>
+                        <p><strong>UV 스크롤링:</strong> 텍스처 이동 효과</p>
+                        <p><strong>회전 애니메이션:</strong> 파티클 회전</p>
+                        <p><strong>노이즈 디스토션:</strong> 자연스러운 움직임</p>
+                        <p><strong>페이드 인/아웃:</strong> 부드러운 등장/소멸</p>
+                    </div>
+                    
+                    <div class="feature-card blending">
+                        <div class="feature-badge">Blending</div>
+                        <h4><i class="fas fa-layer-group"></i> 블렌딩 모드</h4>
+                        <p><strong>Additive:</strong> 밝은 효과 (불, 마법)</p>
+                        <p><strong>Alpha Blend:</strong> 투명 효과 (연기, 구름)</p>
+                        <p><strong>Multiply:</strong> 어두운 효과 (그림자)</p>
+                        <p><strong>Screen:</strong> 부드러운 발광 효과</p>
+                    </div>
+                    
+                    <div class="feature-card distortion">
+                        <div class="feature-badge">Distortion</div>
+                        <h4><i class="fas fa-water"></i> 디스토션 효과</h4>
+                        <p><strong>열 왜곡:</strong> 뜨거운 공기 효과</p>
+                        <p><strong>물 왜곡:</strong> 수면 굴절 효과</p>
+                        <p><strong>마법 왜곡:</strong> 공간 비틀림 효과</p>
+                        <p><strong>충격파:</strong> 폭발 충격 효과</p>
+                    </div>
+                    
+                    <div class="feature-card volumetric">
+                        <div class="feature-badge">Volumetric</div>
+                        <h4><i class="fas fa-cloud"></i> 볼류메트릭 효과</h4>
+                        <p><strong>3D 노이즈:</strong> 입체적인 구름/연기</p>
+                        <p><strong>레이마칭:</strong> 볼륨 렌더링</p>
+                        <p><strong>라이트 스캐터링:</strong> 빛 산란 효과</p>
+                        <p><strong>안개 효과:</strong> 대기 원근감</p>
+                    </div>
+                    
+                    <div class="feature-card gpu">
+                        <div class="feature-badge">GPU</div>
+                        <h4><i class="fas fa-microchip"></i> GPU 파티클</h4>
+                        <p><strong>컴퓨트 셰이더:</strong> GPU 기반 시뮬레이션</p>
+                        <p><strong>대량 파티클:</strong> 수만 개 파티클 처리</p>
+                        <p><strong>물리 시뮬레이션:</strong> 충돌, 중력, 바람</p>
+                        <p><strong>인스턴싱:</strong> 효율적인 렌더링</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🔥 기본 파티클 셰이더</h2>
+                
+                <p>가장 기본적인 파티클 셰이더부터 시작해보겠습니다.</p>
+
+                <h3 class="subsection-title">기본 빌보드 파티클</h3>
+                
+                <div class="code-example">
+<span class="keyword">Shader</span> <span class="string">"Particle/BasicParticle"</span>
+<span class="bracket">{</span>
+    <span class="keyword">Properties</span>
+    <span class="bracket">{</span>
+        <span class="property">_MainTex</span> (<span class="string">"Particle Texture"</span>, <span class="keyword">2D</span>) = <span class="string">"white"</span> <span class="bracket">{}</span>
+        <span class="property">_TintColor</span> (<span class="string">"Tint Color"</span>, <span class="keyword">Color</span>) = (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)
+        <span class="property">_InvFade</span> (<span class="string">"Soft Particles Factor"</span>, <span class="keyword">Range</span>(<span class="number">0.01</span>, <span class="number">3.0</span>)) = <span class="number">1.0</span>
+        <span class="property">_EmissionStrength</span> (<span class="string">"Emission Strength"</span>, <span class="keyword">Range</span>(<span class="number">0</span>, <span class="number">10</span>)) = <span class="number">2.0</span>
+    <span class="bracket">}</span>
+    
+    <span class="keyword">Category</span>
+    <span class="bracket">{</span>
+        <span class="keyword">Tags</span> <span class="bracket">{</span> <span class="string">"Queue"</span>=<span class="string">"Transparent"</span> <span class="string">"IgnoreProjector"</span>=<span class="string">"True"</span> <span class="string">"RenderType"</span>=<span class="string">"Transparent"</span> <span class="bracket">}</span>
+        <span class="keyword">Blend</span> SrcAlpha OneMinusSrcAlpha
+        <span class="keyword">ColorMask</span> RGB
+        <span class="keyword">Cull</span> Off
+        <span class="keyword">Lighting</span> Off
+        <span class="keyword">ZWrite</span> Off
+        
+        <span class="keyword">SubShader</span>
+        <span class="bracket">{</span>
+            <span class="keyword">Pass</span>
+            <span class="bracket">{</span>
+                <span class="keyword">HLSLPROGRAM</span>
+                <span class="keyword">#pragma vertex</span> vert
+                <span class="keyword">#pragma fragment</span> frag
+                <span class="keyword">#pragma multi_compile_particles</span>
+                <span class="keyword">#include</span> <span class="string">"UnityCG.cginc"</span>
+                
+                <span class="keyword">struct</span> <span class="type">appdata_t</span>
+                <span class="bracket">{</span>
+                    <span class="type">float4</span> vertex : <span class="keyword">POSITION</span>;
+                    <span class="type">float4</span> color : <span class="keyword">COLOR</span>;
+                    <span class="type">float2</span> texcoord : <span class="keyword">TEXCOORD0</span>;
+                <span class="bracket">}</span>;
+                
+                <span class="keyword">struct</span> <span class="type">v2f</span>
+                <span class="bracket">{</span>
+                    <span class="type">float4</span> vertex : <span class="keyword">SV_POSITION</span>;
+                    <span class="type">float4</span> color : <span class="keyword">COLOR</span>;
+                    <span class="type">float2</span> texcoord : <span class="keyword">TEXCOORD0</span>;
+                    <span class="keyword">#ifdef</span> SOFTPARTICLES_ON
+                    <span class="type">float4</span> projPos : <span class="keyword">TEXCOORD1</span>;
+                    <span class="keyword">#endif</span>
+                <span class="bracket">}</span>;
+                
+                <span class="keyword">sampler2D</span> <span class="property">_MainTex</span>;
+                <span class="type">float4</span> <span class="property">_MainTex_ST</span>;
+                <span class="type">float4</span> <span class="property">_TintColor</span>;
+                <span class="type">float</span> <span class="property">_InvFade</span>;
+                <span class="type">float</span> <span class="property">_EmissionStrength</span>;
+                
+                <span class="keyword">#ifdef</span> SOFTPARTICLES_ON
+                <span class="keyword">sampler2D</span> <span class="property">_CameraDepthTexture</span>;
+                <span class="keyword">#endif</span>
+                
+                <span class="type">v2f</span> <span class="function">vert</span>(<span class="type">appdata_t</span> v)
+                <span class="bracket">{</span>
+                    <span class="type">v2f</span> o;
+                    o.<span class="property">vertex</span> = <span class="function">UnityObjectToClipPos</span>(v.<span class="property">vertex</span>);
+                    o.<span class="property">color</span> = v.<span class="property">color</span>;
+                    o.<span class="property">texcoord</span> = <span class="function">TRANSFORM_TEX</span>(v.<span class="property">texcoord</span>, <span class="property">_MainTex</span>);
+                    
+                    <span class="keyword">#ifdef</span> SOFTPARTICLES_ON
+                    o.<span class="property">projPos</span> = <span class="function">ComputeScreenPos</span>(o.<span class="property">vertex</span>);
+                    <span class="function">COMPUTE_EYEDEPTH</span>(o.<span class="property">projPos</span>.<span class="property">z</span>);
+                    <span class="keyword">#endif</span>
+                    
+                    <span class="keyword">return</span> o;
+                <span class="bracket">}</span>
+                
+                <span class="type">float4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+                <span class="bracket">{</span>
+                    <span class="comment">// 소프트 파티클 계산</span>
+                    <span class="keyword">#ifdef</span> SOFTPARTICLES_ON
+                    <span class="type">float</span> sceneZ = <span class="function">LinearEyeDepth</span>(<span class="function">SAMPLE_DEPTH_TEXTURE_PROJ</span>(<span class="property">_CameraDepthTexture</span>, <span class="function">UNITY_PROJ_COORD</span>(i.<span class="property">projPos</span>)));
+                    <span class="type">float</span> partZ = i.<span class="property">projPos</span>.<span class="property">z</span>;
+                    <span class="type">float</span> fade = <span class="function">saturate</span>(<span class="property">_InvFade</span> * (sceneZ - partZ));
+                    i.<span class="property">color</span>.<span class="property">a</span> *= fade;
+                    <span class="keyword">#endif</span>
+                    
+                    <span class="comment">// 텍스처 샘플링</span>
+                    <span class="type">float4</span> tex = <span class="function">tex2D</span>(<span class="property">_MainTex</span>, i.<span class="property">texcoord</span>);
+                    
+                    <span class="comment">// 최종 색상 계산</span>
+                    <span class="type">float4</span> col = <span class="number">2.0f</span> * i.<span class="property">color</span> * <span class="property">_TintColor</span> * tex;
+                    col.<span class="property">rgb</span> *= <span class="property">_EmissionStrength</span>;
+                    
+                    <span class="keyword">return</span> col;
+                <span class="bracket">}</span>
+                <span class="keyword">ENDHLSL</span>
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🎨 블렌딩 모드와 효과</h2>
+                
+                <p>다양한 블렌딩 모드를 활용하여 서로 다른 파티클 효과를 만들어보겠습니다.</p>
+
+                <div class="blend-modes">
+                    <div class="blend-card additive">
+                        <div class="blend-visual"></div>
+                        <h4>Additive</h4>
+                        <p>밝은 효과<br>불, 마법, 폭발</p>
+                        <code>Blend One One</code>
+                    </div>
+                    <div class="blend-card alpha">
+                        <div class="blend-visual"></div>
+                        <h4>Alpha Blend</h4>
+                        <p>투명 효과<br>연기, 구름</p>
+                        <code>Blend SrcAlpha OneMinusSrcAlpha</code>
+                    </div>
+                    <div class="blend-card multiply">
+                        <div class="blend-visual"></div>
+                        <h4>Multiply</h4>
+                        <p>어두운 효과<br>그림자, 먼지</p>
+                        <code>Blend DstColor Zero</code>
+                    </div>
+                    <div class="blend-card screen">
+                        <div class="blend-visual"></div>
+                        <h4>Screen</h4>
+                        <p>부드러운 발광<br>오라, 글로우</p>
+                        <code>Blend OneMinusDstColor One</code>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">애니메이션 파티클 셰이더</h3>
+                
+                <div class="code-example">
+<span class="comment">// 고급 애니메이션 파티클 셰이더</span>
+<span class="keyword">Shader</span> <span class="string">"Particle/AnimatedParticle"</span>
+<span class="bracket">{</span>
+    <span class="keyword">Properties</span>
+    <span class="bracket">{</span>
+        <span class="property">_MainTex</span> (<span class="string">"Particle Texture"</span>, <span class="keyword">2D</span>) = <span class="string">"white"</span> <span class="bracket">{}</span>
+        <span class="property">_TintColor</span> (<span class="string">"Tint Color"</span>, <span class="keyword">Color</span>) = (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)
+        <span class="property">_ScrollSpeed</span> (<span class="string">"Scroll Speed"</span>, <span class="keyword">Vector</span>) = (<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>)
+        <span class="property">_RotationSpeed</span> (<span class="string">"Rotation Speed"</span>, <span class="keyword">Range</span>(-<span class="number">10</span>, <span class="number">10</span>)) = <span class="number">0</span>
+        <span class="property">_NoiseTexture</span> (<span class="string">"Noise Texture"</span>, <span class="keyword">2D</span>) = <span class="string">"white"</span> <span class="bracket">{}</span>
+        <span class="property">_NoiseStrength</span> (<span class="string">"Noise Strength"</span>, <span class="keyword">Range</span>(<span class="number">0</span>, <span class="number">1</span>)) = <span class="number">0.1</span>
+        <span class="property">_DistortionStrength</span> (<span class="string">"Distortion Strength"</span>, <span class="keyword">Range</span>(<span class="number">0</span>, <span class="number">1</span>)) = <span class="number">0.1</span>
+    <span class="bracket">}</span>
+    
+    <span class="keyword">Category</span>
+    <span class="bracket">{</span>
+        <span class="keyword">Tags</span> <span class="bracket">{</span> <span class="string">"Queue"</span>=<span class="string">"Transparent"</span> <span class="string">"RenderType"</span>=<span class="string">"Transparent"</span> <span class="bracket">}</span>
+        <span class="keyword">Blend</span> One One <span class="comment">// Additive blending</span>
+        <span class="keyword">Cull</span> Off
+        <span class="keyword">Lighting</span> Off
+        <span class="keyword">ZWrite</span> Off
+        
+        <span class="keyword">SubShader</span>
+        <span class="bracket">{</span>
+            <span class="keyword">Pass</span>
+            <span class="bracket">{</span>
+                <span class="keyword">HLSLPROGRAM</span>
+                <span class="keyword">#pragma vertex</span> vert
+                <span class="keyword">#pragma fragment</span> frag
+                <span class="keyword">#include</span> <span class="string">"UnityCG.cginc"</span>
+                
+                <span class="keyword">struct</span> <span class="type">appdata_t</span>
+                <span class="bracket">{</span>
+                    <span class="type">float4</span> vertex : <span class="keyword">POSITION</span>;
+                    <span class="type">float4</span> color : <span class="keyword">COLOR</span>;
+                    <span class="type">float2</span> texcoord : <span class="keyword">TEXCOORD0</span>;
+                    <span class="type">float4</span> texcoord1 : <span class="keyword">TEXCOORD1</span>; <span class="comment">// 커스텀 데이터 (생명주기, 회전 등)</span>
+                <span class="bracket">}</span>;
+                
+                <span class="keyword">struct</span> <span class="type">v2f</span>
+                <span class="bracket">{</span>
+                    <span class="type">float4</span> vertex : <span class="keyword">SV_POSITION</span>;
+                    <span class="type">float4</span> color : <span class="keyword">COLOR</span>;
+                    <span class="type">float2</span> texcoord : <span class="keyword">TEXCOORD0</span>;
+                    <span class="type">float2</span> noiseUV : <span class="keyword">TEXCOORD1</span>;
+                    <span class="type">float</span> lifetime : <span class="keyword">TEXCOORD2</span>;
+                <span class="bracket">}</span>;
+                
+                <span class="keyword">sampler2D</span> <span class="property">_MainTex</span>;
+                <span class="keyword">sampler2D</span> <span class="property">_NoiseTexture</span>;
+                <span class="type">float4</span> <span class="property">_MainTex_ST</span>;
+                <span class="type">float4</span> <span class="property">_TintColor</span>;
+                <span class="type">float4</span> <span class="property">_ScrollSpeed</span>;
+                <span class="type">float</span> <span class="property">_RotationSpeed</span>;
+                <span class="type">float</span> <span class="property">_NoiseStrength</span>;
+                <span class="type">float</span> <span class="property">_DistortionStrength</span>;
+                
+                <span class="comment">// 2D 회전 함수</span>
+                <span class="type">float2</span> <span class="function">rotate2D</span>(<span class="type">float2</span> uv, <span class="type">float</span> angle)
+                <span class="bracket">{</span>
+                    <span class="type">float</span> cosAngle = <span class="function">cos</span>(angle);
+                    <span class="type">float</span> sinAngle = <span class="function">sin</span>(angle);
+                    <span class="type">float2x2</span> rotMatrix = <span class="type">float2x2</span>(cosAngle, -sinAngle, sinAngle, cosAngle);
+                    <span class="keyword">return</span> <span class="function">mul</span>(rotMatrix, uv - <span class="number">0.5</span>) + <span class="number">0.5</span>;
+                <span class="bracket">}</span>
+                
+                <span class="type">v2f</span> <span class="function">vert</span>(<span class="type">appdata_t</span> v)
+                <span class="bracket">{</span>
+                    <span class="type">v2f</span> o;
+                    o.<span class="property">vertex</span> = <span class="function">UnityObjectToClipPos</span>(v.<span class="property">vertex</span>);
+                    o.<span class="property">color</span> = v.<span class="property">color</span>;
+                    o.<span class="property">lifetime</span> = v.<span class="property">texcoord1</span>.<span class="property">x</span>; <span class="comment">// 생명주기 정보</span>
+                    
+                    <span class="comment">// UV 스크롤링</span>
+                    <span class="type">float2</span> scrolledUV = v.<span class="property">texcoord</span> + <span class="property">_ScrollSpeed</span>.<span class="property">xy</span> * <span class="property">_Time</span>.<span class="property">y</span>;
+                    
+                    <span class="comment">// 회전 적용</span>
+                    <span class="type">float</span> rotation = <span class="property">_RotationSpeed</span> * <span class="property">_Time</span>.<span class="property">y</span> + v.<span class="property">texcoord1</span>.<span class="property">y</span>; <span class="comment">// 개별 회전 오프셋</span>
+                    o.<span class="property">texcoord</span> = <span class="function">rotate2D</span>(scrolledUV, rotation);
+                    
+                    <span class="comment">// 노이즈 UV</span>
+                    o.<span class="property">noiseUV</span> = v.<span class="property">texcoord</span> * <span class="number">2.0</span> + <span class="property">_Time</span>.<span class="property">y</span> * <span class="number">0.5</span>;
+                    
+                    <span class="keyword">return</span> o;
+                <span class="bracket">}</span>
+                
+                <span class="type">float4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+                <span class="bracket">{</span>
+                    <span class="comment">// 노이즈 기반 디스토션</span>
+                    <span class="type">float2</span> noise = <span class="function">tex2D</span>(<span class="property">_NoiseTexture</span>, i.<span class="property">noiseUV</span>).<span class="property">rg</span> * <span class="number">2.0</span> - <span class="number">1.0</span>;
+                    <span class="type">float2</span> distortedUV = i.<span class="property">texcoord</span> + noise * <span class="property">_DistortionStrength</span>;
+                    
+                    <span class="comment">// 메인 텍스처 샘플링</span>
+                    <span class="type">float4</span> tex = <span class="function">tex2D</span>(<span class="property">_MainTex</span>, distortedUV);
+                    
+                    <span class="comment">// 생명주기 기반 페이드</span>
+                    <span class="type">float</span> lifeFade = <span class="function">smoothstep</span>(<span class="number">0.0</span>, <span class="number">0.1</span>, i.<span class="property">lifetime</span>) * <span class="function">smoothstep</span>(<span class="number">1.0</span>, <span class="number">0.8</span>, i.<span class="property">lifetime</span>);
+                    
+                    <span class="comment">// 노이즈 강도 적용</span>
+                    <span class="type">float</span> noiseIntensity = <span class="function">tex2D</span>(<span class="property">_NoiseTexture</span>, i.<span class="property">noiseUV</span> * <span class="number">0.5</span>).<span class="property">r</span>;
+                    <span class="type">float</span> finalAlpha = tex.<span class="property">a</span> * lifeFade * <span class="function">lerp</span>(<span class="number">1.0</span>, noiseIntensity, <span class="property">_NoiseStrength</span>);
+                    
+                    <span class="comment">// 최종 색상</span>
+                    <span class="type">float4</span> col = tex * i.<span class="property">color</span> * <span class="property">_TintColor</span>;
+                    col.<span class="property">a</span> = finalAlpha;
+                    
+                    <span class="keyword">return</span> col;
+                <span class="bracket">}</span>
+                <span class="keyword">ENDHLSL</span>
+            <span class="bracket">}</span>
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🌪️ 디스토션 효과</h2>
+                
+                <p>열기, 충격파, 마법 등의 공간 왜곡 효과를 구현해보겠습니다.</p>
+
+                <h3 class="subsection-title">열 왜곡 셰이더</h3>
+                
+                <div class="code-example">
+<span class="comment">// 열 왜곡 디스토션 셰이더</span>
+<span class="keyword">Shader</span> <span class="string">"Particle/HeatDistortion"</span>
+<span class="bracket">{</span>
+    <span class="keyword">Properties</span>
+    <span class="bracket">{</span>
+        <span class="property">_DistortionTex</span> (<span class="string">"Distortion Texture"</span>, <span class="keyword">2D</span>) = <span class="string">"bump"</span> <span class="bracket">{}</span>
+        <span class="property">_DistortionStrength</span> (<span class="string">"Distortion Strength"</span>, <span class="keyword">Range</span>(<span class="number">0</span>, <span class="number">1</span>)) = <span class="number">0.1</span>
+        <span class="property">_ScrollSpeed</span> (<span class="string">"Scroll Speed"</span>, <span class="keyword">Vector</span>) = (<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>)
+        <span class="property">_TintColor</span> (<span class="string">"Tint Color"</span>, <span class="keyword">Color</span>) = (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0.5</span>)
+    <span class="bracket">}</span>
+    
+    <span class="keyword">Category</span>
+    <span class="bracket">{</span>
+        <span class="keyword">Tags</span> <span class="bracket">{</span> <span class="string">"Queue"</span>=<span class="string">"Transparent"</span> <span class="string">"RenderType"</span>=<span class="string">"Transparent"</span> <span class="bracket">}</span>
+        <span class="keyword">Blend</span> SrcAlpha OneMinusSrcAlpha
+        <span class="keyword">Cull</span> Off
+        <span class="keyword">Lighting</span> Off
+        <span class="keyword">ZWrite</span> Off
+        
+        <span class="comment">// 배경을 캡처하기 위한 GrabPass</span>
+        <span class="keyword">GrabPass</span> <span class="bracket">{</span> <span class="string">"_BackgroundTexture"</span> <span class="bracket">}</span>
+        
+        <span class="keyword">Pass</span>
+        <span class="bracket">{</span>
+            <span class="keyword">HLSLPROGRAM</span>
+            <span class="keyword">#pragma vertex</span> vert
+            <span class="keyword">#pragma fragment</span> frag
+            <span class="keyword">#include</span> <span class="string">"UnityCG.cginc"</span>
+            
+            <span class="keyword">struct</span> <span class="type">appdata_t</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> vertex : <span class="keyword">POSITION</span>;
+                <span class="type">float4</span> color : <span class="keyword">COLOR</span>;
+                <span class="type">float2</span> texcoord : <span class="keyword">TEXCOORD0</span>;
+            <span class="bracket">}</span>;
+            
+            <span class="keyword">struct</span> <span class="type">v2f</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> vertex : <span class="keyword">SV_POSITION</span>;
+                <span class="type">float4</span> color : <span class="keyword">COLOR</span>;
+                <span class="type">float2</span> texcoord : <span class="keyword">TEXCOORD0</span>;
+                <span class="type">float4</span> grabPos : <span class="keyword">TEXCOORD1</span>;
+            <span class="bracket">}</span>;
+            
+            <span class="keyword">sampler2D</span> <span class="property">_DistortionTex</span>;
+            <span class="keyword">sampler2D</span> <span class="property">_BackgroundTexture</span>;
+            <span class="type">float4</span> <span class="property">_DistortionTex_ST</span>;
+            <span class="type">float</span> <span class="property">_DistortionStrength</span>;
+            <span class="type">float4</span> <span class="property">_ScrollSpeed</span>;
+            <span class="type">float4</span> <span class="property">_TintColor</span>;
+            
+            <span class="type">v2f</span> <span class="function">vert</span>(<span class="type">appdata_t</span> v)
+            <span class="bracket">{</span>
+                <span class="type">v2f</span> o;
+                o.<span class="property">vertex</span> = <span class="function">UnityObjectToClipPos</span>(v.<span class="property">vertex</span>);
+                o.<span class="property">color</span> = v.<span class="property">color</span>;
+                o.<span class="property">texcoord</span> = <span class="function">TRANSFORM_TEX</span>(v.<span class="property">texcoord</span>, <span class="property">_DistortionTex</span>);
+                o.<span class="property">grabPos</span> = <span class="function">ComputeGrabScreenPos</span>(o.<span class="property">vertex</span>);
+                <span class="keyword">return</span> o;
+            <span class="bracket">}</span>
+            
+            <span class="type">float4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+            <span class="bracket">{</span>
+                <span class="comment">// 스크롤링 UV</span>
+                <span class="type">float2</span> scrolledUV = i.<span class="property">texcoord</span> + <span class="property">_ScrollSpeed</span>.<span class="property">xy</span> * <span class="property">_Time</span>.<span class="property">y</span>;
+                
+                <span class="comment">// 디스토션 노멀 맵 샘플링</span>
+                <span class="type">float3</span> distortionNormal = <span class="function">UnpackNormal</span>(<span class="function">tex2D</span>(<span class="property">_DistortionTex</span>, scrolledUV));
+                
+                <span class="comment">// 다중 레이어 디스토션</span>
+                <span class="type">float3</span> distortionNormal2 = <span class="function">UnpackNormal</span>(<span class="function">tex2D</span>(<span class="property">_DistortionTex</span>, scrolledUV * <span class="number">1.5</span> + <span class="property">_Time</span>.<span class="property">y</span> * <span class="number">0.3</span>));
+                distortionNormal = <span class="function">normalize</span>(distortionNormal + distortionNormal2 * <span class="number">0.5</span>);
+                
+                <span class="comment">// 스크린 좌표 왜곡</span>
+                <span class="type">float2</span> distortion = distortionNormal.<span class="property">xy</span> * <span class="property">_DistortionStrength</span> * i.<span class="property">color</span>.<span class="property">a</span>;
+                <span class="type">float4</span> distortedGrabPos = i.<span class="property">grabPos</span>;
+                distortedGrabPos.<span class="property">xy</span> += distortion * distortedGrabPos.<span class="property">w</span>;
+                
+                <span class="comment">// 배경 텍스처 샘플링</span>
+                <span class="type">float4</span> backgroundColor = <span class="function">tex2Dproj</span>(<span class="property">_BackgroundTexture</span>, distortedGrabPos);
+                
+                <span class="comment">// 열기 효과를 위한 색상 조정</span>
+                backgroundColor.<span class="property">rgb</span> = <span class="function">lerp</span>(backgroundColor.<span class="property">rgb</span>, backgroundColor.<span class="property">rgb</span> * <span class="property">_TintColor</span>.<span class="property">rgb</span>, <span class="property">_TintColor</span>.<span class="property">a</span>);
+                
+                <span class="comment">// 파티클 색상과 블렌딩</span>
+                <span class="type">float4</span> finalColor = <span class="function">lerp</span>(backgroundColor, backgroundColor * i.<span class="property">color</span>, i.<span class="property">color</span>.<span class="property">a</span>);
+                
+                <span class="keyword">return</span> finalColor;
+            <span class="bracket">}</span>
+            <span class="keyword">ENDHLSL</span>
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">☁️ 볼류메트릭 파티클</h2>
+                
+                <p>3D 노이즈를 활용한 입체적인 구름과 연기 효과를 구현해보겠습니다.</p>
+
+                <h3 class="subsection-title">3D 노이즈 구름 셰이더</h3>
+                
+                <div class="code-example">
+<span class="comment">// 볼류메트릭 구름 셰이더</span>
+<span class="keyword">Shader</span> <span class="string">"Particle/VolumetricClouds"</span>
+<span class="bracket">{</span>
+    <span class="keyword">Properties</span>
+    <span class="bracket">{</span>
+        <span class="property">_CloudColor</span> (<span class="string">"Cloud Color"</span>, <span class="keyword">Color</span>) = (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)
+        <span class="property">_CloudDensity</span> (<span class="string">"Cloud Density"</span>, <span class="keyword">Range</span>(<span class="number">0</span>, <span class="number">5</span>)) = <span class="number">1.0</span>
+        <span class="property">_NoiseScale</span> (<span class="string">"Noise Scale"</span>, <span class="keyword">Range</span>(<span class="number">0.1</span>, <span class="number">10</span>)) = <span class="number">1.0</span>
+        <span class="property">_WindSpeed</span> (<span class="string">"Wind Speed"</span>, <span class="keyword">Vector</span>) = (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0.5</span>, <span class="number">0</span>)
+        <span class="property">_Steps</span> (<span class="string">"Ray Steps"</span>, <span class="keyword">Range</span>(<span class="number">8</span>, <span class="number">64</span>)) = <span class="number">32</span>
+        <span class="property">_StepSize</span> (<span class="string">"Step Size"</span>, <span class="keyword">Range</span>(<span class="number">0.01</span>, <span class="number">0.5</span>)) = <span class="number">0.1</span>
+    <span class="bracket">}</span>
+    
+    <span class="keyword">Category</span>
+    <span class="bracket">{</span>
+        <span class="keyword">Tags</span> <span class="bracket">{</span> <span class="string">"Queue"</span>=<span class="string">"Transparent"</span> <span class="string">"RenderType"</span>=<span class="string">"Transparent"</span> <span class="bracket">}</span>
+        <span class="keyword">Blend</span> SrcAlpha OneMinusSrcAlpha
+        <span class="keyword">Cull</span> Off
+        <span class="keyword">Lighting</span> Off
+        <span class="keyword">ZWrite</span> Off
+        
+        <span class="keyword">Pass</span>
+        <span class="bracket">{</span>
+            <span class="keyword">HLSLPROGRAM</span>
+            <span class="keyword">#pragma vertex</span> vert
+            <span class="keyword">#pragma fragment</span> frag
+            <span class="keyword">#include</span> <span class="string">"UnityCG.cginc"</span>
+            
+            <span class="keyword">struct</span> <span class="type">appdata_t</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> vertex : <span class="keyword">POSITION</span>;
+                <span class="type">float4</span> color : <span class="keyword">COLOR</span>;
+                <span class="type">float2</span> texcoord : <span class="keyword">TEXCOORD0</span>;
+            <span class="bracket">}</span>;
+            
+            <span class="keyword">struct</span> <span class="type">v2f</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> vertex : <span class="keyword">SV_POSITION</span>;
+                <span class="type">float4</span> color : <span class="keyword">COLOR</span>;
+                <span class="type">float2</span> texcoord : <span class="keyword">TEXCOORD0</span>;
+                <span class="type">float3</span> worldPos : <span class="keyword">TEXCOORD1</span>;
+                <span class="type">float3</span> viewDir : <span class="keyword">TEXCOORD2</span>;
+            <span class="bracket">}</span>;
+            
+            <span class="type">float4</span> <span class="property">_CloudColor</span>;
+            <span class="type">float</span> <span class="property">_CloudDensity</span>;
+            <span class="type">float</span> <span class="property">_NoiseScale</span>;
+            <span class="type">float4</span> <span class="property">_WindSpeed</span>;
+            <span class="type">int</span> <span class="property">_Steps</span>;
+            <span class="type">float</span> <span class="property">_StepSize</span>;
+            
+            <span class="comment">// 3D 노이즈 함수 (Simplex Noise 간소화 버전)</span>
+            <span class="type">float</span> <span class="function">noise3D</span>(<span class="type">float3</span> p)
+            <span class="bracket">{</span>
+                <span class="type">float3</span> i = <span class="function">floor</span>(p);
+                <span class="type">float3</span> f = <span class="function">frac</span>(p);
+                f = f * f * (<span class="number">3.0</span> - <span class="number">2.0</span> * f);
+                
+                <span class="type">float</span> n = i.<span class="property">x</span> + i.<span class="property">y</span> * <span class="number">57.0</span> + <span class="number">113.0</span> * i.<span class="property">z</span>;
+                <span class="keyword">return</span> <span class="function">lerp</span>(<span class="function">lerp</span>(<span class="function">lerp</span>(<span class="function">frac</span>(<span class="function">sin</span>(n) * <span class="number">43758.5453</span>),
+                                   <span class="function">frac</span>(<span class="function">sin</span>(n + <span class="number">1.0</span>) * <span class="number">43758.5453</span>), f.<span class="property">x</span>),
+                              <span class="function">lerp</span>(<span class="function">frac</span>(<span class="function">sin</span>(n + <span class="number">57.0</span>) * <span class="number">43758.5453</span>),
+                                   <span class="function">frac</span>(<span class="function">sin</span>(n + <span class="number">58.0</span>) * <span class="number">43758.5453</span>), f.<span class="property">x</span>), f.<span class="property">y</span>),
+                         <span class="function">lerp</span>(<span class="function">lerp</span>(<span class="function">frac</span>(<span class="function">sin</span>(n + <span class="number">113.0</span>) * <span class="number">43758.5453</span>),
+                                   <span class="function">frac</span>(<span class="function">sin</span>(n + <span class="number">114.0</span>) * <span class="number">43758.5453</span>), f.<span class="property">x</span>),
+                              <span class="function">lerp</span>(<span class="function">frac</span>(<span class="function">sin</span>(n + <span class="number">170.0</span>) * <span class="number">43758.5453</span>),
+                                   <span class="function">frac</span>(<span class="function">sin</span>(n + <span class="number">171.0</span>) * <span class="number">43758.5453</span>), f.<span class="property">x</span>), f.<span class="property">y</span>), f.<span class="property">z</span>);
+            <span class="bracket">}</span>
+            
+            <span class="comment">// 프랙탈 노이즈</span>
+            <span class="type">float</span> <span class="function">fbm</span>(<span class="type">float3</span> p)
+            <span class="bracket">{</span>
+                <span class="type">float</span> value = <span class="number">0.0</span>;
+                <span class="type">float</span> amplitude = <span class="number">0.5</span>;
+                <span class="type">float</span> frequency = <span class="number">1.0</span>;
+                
+                <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i < <span class="number">4</span>; i++)
+                <span class="bracket">{</span>
+                    value += amplitude * <span class="function">noise3D</span>(p * frequency);
+                    amplitude *= <span class="number">0.5</span>;
+                    frequency *= <span class="number">2.0</span>;
+                <span class="bracket">}</span>
+                
+                <span class="keyword">return</span> value;
+            <span class="bracket">}</span>
+            
+            <span class="type">v2f</span> <span class="function">vert</span>(<span class="type">appdata_t</span> v)
+            <span class="bracket">{</span>
+                <span class="type">v2f</span> o;
+                o.<span class="property">vertex</span> = <span class="function">UnityObjectToClipPos</span>(v.<span class="property">vertex</span>);
+                o.<span class="property">color</span> = v.<span class="property">color</span>;
+                o.<span class="property">texcoord</span> = v.<span class="property">texcoord</span>;
+                o.<span class="property">worldPos</span> = <span class="function">mul</span>(<span class="property">unity_ObjectToWorld</span>, v.<span class="property">vertex</span>).<span class="property">xyz</span>;
+                o.<span class="property">viewDir</span> = <span class="function">normalize</span>(<span class="property">_WorldSpaceCameraPos</span> - o.<span class="property">worldPos</span>);
+                <span class="keyword">return</span> o;
+            <span class="bracket">}</span>
+            
+            <span class="type">float4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+            <span class="bracket">{</span>
+                <span class="comment">// 레이마칭 설정</span>
+                <span class="type">float3</span> rayStart = i.<span class="property">worldPos</span>;
+                <span class="type">float3</span> rayDir = -i.<span class="property">viewDir</span>;
+                
+                <span class="type">float</span> totalDensity = <span class="number">0.0</span>;
+                <span class="type">float3</span> lightAccumulation = <span class="type">float3</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
+                
+                <span class="comment">// 레이마칭 루프</span>
+                <span class="keyword">for</span> (<span class="type">int</span> step = <span class="number">0</span>; step < <span class="property">_Steps</span>; step++)
+                <span class="bracket">{</span>
+                    <span class="type">float3</span> samplePos = rayStart + rayDir * <span class="property">_StepSize</span> * <span class="type">float</span>(step);
+                    
+                    <span class="comment">// 바람 효과 적용</span>
+                    <span class="type">float3</span> windOffset = <span class="property">_WindSpeed</span>.<span class="property">xyz</span> * <span class="property">_Time</span>.<span class="property">y</span>;
+                    <span class="type">float3</span> noisePos = (samplePos + windOffset) * <span class="property">_NoiseScale</span>;
+                    
+                    <span class="comment">// 노이즈 밀도 계산</span>
+                    <span class="type">float</span> density = <span class="function">fbm</span>(noisePos) * <span class="property">_CloudDensity</span>;
+                    density = <span class="function">saturate</span>(density - <span class="number">0.4</span>) * <span class="number">2.0</span>; <span class="comment">// 임계값 적용</span>
+                    
+                    <span class="comment">// 거리 기반 페이드</span>
+                    <span class="type">float</span> distanceFade = <span class="number">1.0</span> - <span class="function">saturate</span>(<span class="type">float</span>(step) / <span class="type">float</span>(<span class="property">_Steps</span>));
+                    density *= distanceFade;
+                    
+                    totalDensity += density * <span class="property">_StepSize</span>;
+                    
+                    <span class="comment">// 간단한 라이팅 (태양 방향)</span>
+                    <span class="type">float3</span> lightDir = <span class="function">normalize</span>(<span class="type">float3</span>(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>));
+                    <span class="type">float</span> lightDensity = <span class="function">fbm</span>(noisePos + lightDir * <span class="number">0.5</span>);
+                    <span class="type">float</span> lightTransmission = <span class="function">exp</span>(-lightDensity * <span class="number">2.0</span>);
+                    
+                    lightAccumulation += density * lightTransmission * <span class="property">_CloudColor</span>.<span class="property">rgb</span> * <span class="property">_StepSize</span>;
+                    
+                    <span class="comment">// 조기 종료 (최적화)</span>
+                    <span class="keyword">if</span> (totalDensity > <span class="number">0.99</span>) <span class="keyword">break</span>;
+                <span class="bracket">}</span>
+                
+                <span class="comment">// 최종 색상 계산</span>
+                <span class="type">float</span> alpha = <span class="number">1.0</span> - <span class="function">exp</span>(-totalDensity);
+                <span class="type">float3</span> finalColor = lightAccumulation / <span class="function">max</span>(totalDensity, <span class="number">0.001</span>);
+                
+                <span class="keyword">return</span> <span class="type">float4</span>(finalColor * i.<span class="property">color</span>.<span class="property">rgb</span>, alpha * i.<span class="property">color</span>.<span class="property">a</span>);
+            <span class="bracket">}</span>
+            <span class="keyword">ENDHLSL</span>
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🎮 GPU 파티클 시스템</h2>
+                
+                <p>컴퓨트 셰이더를 활용한 고성능 GPU 파티클 시스템을 구현해보겠습니다.</p>
+
+                <h3 class="subsection-title">컴퓨트 셰이더 파티클 시뮬레이션</h3>
+                
+                <div class="code-example">
+<span class="comment">// GPU 파티클 컴퓨트 셰이더</span>
+<span class="keyword">#pragma kernel</span> CSMain
+
+<span class="keyword">struct</span> <span class="type">Particle</span>
+<span class="bracket">{</span>
+    <span class="type">float3</span> position;
+    <span class="type">float3</span> velocity;
+    <span class="type">float4</span> color;
+    <span class="type">float</span> life;
+    <span class="type">float</span> size;
+    <span class="type">float</span> rotation;
+    <span class="type">float</span> angularVelocity;
+<span class="bracket">}</span>;
+
+<span class="keyword">RWStructuredBuffer</span><<span class="type">Particle</span>> <span class="property">particles</span>;
+<span class="type">float</span> <span class="property">deltaTime</span>;
+<span class="type">float3</span> <span class="property">gravity</span>;
+<span class="type">float3</span> <span class="property">wind</span>;
+<span class="type">float</span> <span class="property">damping</span>;
+<span class="type">int</span> <span class="property">particleCount</span>;
+
+<span class="comment">// 노이즈 함수</span>
+<span class="type">float</span> <span class="function">random</span>(<span class="type">float2</span> st)
+<span class="bracket">{</span>
+    <span class="keyword">return</span> <span class="function">frac</span>(<span class="function">sin</span>(<span class="function">dot</span>(st.<span class="property">xy</span>, <span class="type">float2</span>(<span class="number">12.9898</span>, <span class="number">78.233</span>))) * <span class="number">43758.5453123</span>);
+<span class="bracket">}</span>
+
+<span class="type">float3</span> <span class="function">randomSphere</span>(<span class="type">float</span> seed)
+<span class="bracket">{</span>
+    <span class="type">float</span> theta = <span class="function">random</span>(<span class="type">float2</span>(seed, seed + <span class="number">1.0</span>)) * <span class="number">2.0</span> * <span class="number">3.14159</span>;
+    <span class="type">float</span> phi = <span class="function">acos</span>(<span class="number">2.0</span> * <span class="function">random</span>(<span class="type">float2</span>(seed + <span class="number">2.0</span>, seed + <span class="number">3.0</span>)) - <span class="number">1.0</span>);
+    
+    <span class="type">float3</span> dir;
+    dir.<span class="property">x</span> = <span class="function">sin</span>(phi) * <span class="function">cos</span>(theta);
+    dir.<span class="property">y</span> = <span class="function">sin</span>(phi) * <span class="function">sin</span>(theta);
+    dir.<span class="property">z</span> = <span class="function">cos</span>(phi);
+    
+    <span class="keyword">return</span> dir;
+<span class="bracket">}</span>
+
+[<span class="keyword">numthreads</span>(<span class="number">64</span>, <span class="number">1</span>, <span class="number">1</span>)]
+<span class="keyword">void</span> <span class="function">CSMain</span>(<span class="type">uint3</span> id : <span class="keyword">SV_DispatchThreadID</span>)
+<span class="bracket">{</span>
+    <span class="type">uint</span> index = id.<span class="property">x</span>;
+    <span class="keyword">if</span> (index >= <span class="type">uint</span>(particleCount)) <span class="keyword">return</span>;
+    
+    <span class="type">Particle</span> p = particles[index];
+    
+    <span class="comment">// 생명주기 업데이트</span>
+    p.<span class="property">life</span> -= deltaTime;
+    
+    <span class="comment">// 파티클이 죽었으면 리스폰</span>
+    <span class="keyword">if</span> (p.<span class="property">life</span> <= <span class="number">0.0</span>)
+    <span class="bracket">{</span>
+        <span class="comment">// 새 파티클 초기화</span>
+        p.<span class="property">position</span> = <span class="type">float3</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
+        p.<span class="property">velocity</span> = <span class="function">randomSphere</span>(<span class="type">float</span>(index) + <span class="property">_Time</span>.<span class="property">y</span>) * <span class="number">5.0</span>;
+        p.<span class="property">life</span> = <span class="function">random</span>(<span class="type">float2</span>(<span class="type">float</span>(index), <span class="property">_Time</span>.<span class="property">y</span>)) * <span class="number">3.0</span> + <span class="number">1.0</span>;
+        p.<span class="property">size</span> = <span class="function">random</span>(<span class="type">float2</span>(<span class="type">float</span>(index) + <span class="number">100</span>, <span class="property">_Time</span>.<span class="property">y</span>)) * <span class="number">0.5</span> + <span class="number">0.5</span>;
+        p.<span class="property">rotation</span> = <span class="function">random</span>(<span class="type">float2</span>(<span class="type">float</span>(index) + <span class="number">200</span>, <span class="property">_Time</span>.<span class="property">y</span>)) * <span class="number">6.28</span>;
+        p.<span class="property">angularVelocity</span> = (<span class="function">random</span>(<span class="type">float2</span>(<span class="type">float</span>(index) + <span class="number">300</span>, <span class="property">_Time</span>.<span class="property">y</span>)) - <span class="number">0.5</span>) * <span class="number">10.0</span>;
+        p.<span class="property">color</span> = <span class="type">float4</span>(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);
+    <span class="bracket">}</span>
+    <span class="keyword">else</span>
+    <span class="bracket">{</span>
+        <span class="comment">// 물리 시뮬레이션</span>
+        <span class="type">float3</span> force = gravity + wind;
+        
+        <span class="comment">// 노이즈 기반 터뷸런스</span>
+        <span class="type">float3</span> turbulence = <span class="type">float3</span>(
+            <span class="function">sin</span>(p.<span class="property">position</span>.<span class="property">x</span> * <span class="number">0.1</span> + <span class="property">_Time</span>.<span class="property">y</span>) * <span class="number">2.0</span>,
+            <span class="function">cos</span>(p.<span class="property">position</span>.<span class="property">z</span> * <span class="number">0.1</span> + <span class="property">_Time</span>.<span class="property">y</span>) * <span class="number">2.0</span>,
+            <span class="function">sin</span>(p.<span class="property">position</span>.<span class="property">y</span> * <span class="number">0.1</span> + <span class="property">_Time</span>.<span class="property">y</span>) * <span class="number">2.0</span>
+        );
+        
+        force += turbulence;
+        
+        <span class="comment">// 속도 업데이트</span>
+        p.<span class="property">velocity</span> += force * deltaTime;
+        p.<span class="property">velocity</span> *= damping;
+        
+        <span class="comment">// 위치 업데이트</span>
+        p.<span class="property">position</span> += p.<span class="property">velocity</span> * deltaTime;
+        
+        <span class="comment">// 회전 업데이트</span>
+        p.<span class="property">rotation</span> += p.<span class="property">angularVelocity</span> * deltaTime;
+        
+        <span class="comment">// 생명주기 기반 색상/크기 변화</span>
+        <span class="type">float</span> lifeRatio = p.<span class="property">life</span> / <span class="number">3.0</span>; <span class="comment">// 최대 생명주기 가정</span>
+        p.<span class="property">color</span>.<span class="property">a</span> = <span class="function">smoothstep</span>(<span class="number">0.0</span>, <span class="number">0.1</span>, lifeRatio) * <span class="function">smoothstep</span>(<span class="number">1.0</span>, <span class="number">0.8</span>, lifeRatio);
+        p.<span class="property">size</span> *= <span class="number">1.0</span> + (<span class="number">1.0</span> - lifeRatio) * <span class="number">0.5</span>; <span class="comment">// 시간이 지날수록 커짐</span>
+    <span class="bracket">}</span>
+    
+    particles[index] = p;
+<span class="bracket">}</span>
+                </div>
+
+                <h3 class="subsection-title">GPU 파티클 렌더링 셰이더</h3>
+                
+                <div class="code-example">
+<span class="comment">// GPU 파티클 렌더링 셰이더</span>
+<span class="keyword">Shader</span> <span class="string">"Particle/GPUParticleRenderer"</span>
+<span class="bracket">{</span>
+    <span class="keyword">Properties</span>
+    <span class="bracket">{</span>
+        <span class="property">_MainTex</span> (<span class="string">"Particle Texture"</span>, <span class="keyword">2D</span>) = <span class="string">"white"</span> <span class="bracket">{}</span>
+        <span class="property">_TintColor</span> (<span class="string">"Tint Color"</span>, <span class="keyword">Color</span>) = (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)
+    <span class="bracket">}</span>
+    
+    <span class="keyword">Category</span>
+    <span class="bracket">{</span>
+        <span class="keyword">Tags</span> <span class="bracket">{</span> <span class="string">"Queue"</span>=<span class="string">"Transparent"</span> <span class="string">"RenderType"</span>=<span class="string">"Transparent"</span> <span class="bracket">}</span>
+        <span class="keyword">Blend</span> One One
+        <span class="keyword">Cull</span> Off
+        <span class="keyword">Lighting</span> Off
+        <span class="keyword">ZWrite</span> Off
+        
+        <span class="keyword">Pass</span>
+        <span class="bracket">{</span>
+            <span class="keyword">HLSLPROGRAM</span>
+            <span class="keyword">#pragma vertex</span> vert
+            <span class="keyword">#pragma fragment</span> frag
+            <span class="keyword">#pragma target</span> <span class="number">4.5</span>
+            <span class="keyword">#include</span> <span class="string">"UnityCG.cginc"</span>
+            
+            <span class="keyword">struct</span> <span class="type">Particle</span>
+            <span class="bracket">{</span>
+                <span class="type">float3</span> position;
+                <span class="type">float3</span> velocity;
+                <span class="type">float4</span> color;
+                <span class="type">float</span> life;
+                <span class="type">float</span> size;
+                <span class="type">float</span> rotation;
+                <span class="type">float</span> angularVelocity;
+            <span class="bracket">}</span>;
+            
+            <span class="keyword">StructuredBuffer</span><<span class="type">Particle</span>> <span class="property">particleBuffer</span>;
+            <span class="keyword">sampler2D</span> <span class="property">_MainTex</span>;
+            <span class="type">float4</span> <span class="property">_TintColor</span>;
+            
+            <span class="keyword">struct</span> <span class="type">v2f</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> vertex : <span class="keyword">SV_POSITION</span>;
+                <span class="type">float4</span> color : <span class="keyword">COLOR</span>;
+                <span class="type">float2</span> texcoord : <span class="keyword">TEXCOORD0</span>;
+            <span class="bracket">}</span>;
+            
+            <span class="type">v2f</span> <span class="function">vert</span>(<span class="type">uint</span> vid : <span class="keyword">SV_VertexID</span>, <span class="type">uint</span> iid : <span class="keyword">SV_InstanceID</span>)
+            <span class="bracket">{</span>
+                <span class="type">v2f</span> o;
+                
+                <span class="comment">// 파티클 데이터 가져오기</span>
+                <span class="type">Particle</span> p = particleBuffer[iid];
+                
+                <span class="comment">// 쿼드 버텍스 생성 (빌보드)</span>
+                <span class="type">float2</span> quadVertices[<span class="number">4</span>] = <span class="bracket">{</span>
+                    <span class="type">float2</span>(-<span class="number">1</span>, -<span class="number">1</span>), <span class="type">float2</span>(<span class="number">1</span>, -<span class="number">1</span>),
+                    <span class="type">float2</span>(-<span class="number">1</span>, <span class="number">1</span>), <span class="type">float2</span>(<span class="number">1</span>, <span class="number">1</span>)
+                <span class="bracket">}</span>;
+                
+                <span class="type">float2</span> quadUVs[<span class="number">4</span>] = <span class="bracket">{</span>
+                    <span class="type">float2</span>(<span class="number">0</span>, <span class="number">0</span>), <span class="type">float2</span>(<span class="number">1</span>, <span class="number">0</span>),
+                    <span class="type">float2</span>(<span class="number">0</span>, <span class="number">1</span>), <span class="type">float2</span>(<span class="number">1</span>, <span class="number">1</span>)
+                <span class="bracket">}</span>;
+                
+                <span class="type">float2</span> vertex = quadVertices[vid];
+                o.<span class="property">texcoord</span> = quadUVs[vid];
+                
+                <span class="comment">// 회전 적용</span>
+                <span class="type">float</span> cosRot = <span class="function">cos</span>(p.<span class="property">rotation</span>);
+                <span class="type">float</span> sinRot = <span class="function">sin</span>(p.<span class="property">rotation</span>);
+                <span class="type">float2</span> rotatedVertex = <span class="type">float2</span>(
+                    vertex.<span class="property">x</span> * cosRot - vertex.<span class="property">y</span> * sinRot,
+                    vertex.<span class="property">x</span> * sinRot + vertex.<span class="property">y</span> * cosRot
+                );
+                
+                <span class="comment">// 빌보드 변환</span>
+                <span class="type">float3</span> worldPos = p.<span class="property">position</span>;
+                <span class="type">float3</span> cameraRight = <span class="function">normalize</span>(<span class="property">UNITY_MATRIX_V</span>[<span class="number">0</span>].<span class="property">xyz</span>);
+                <span class="type">float3</span> cameraUp = <span class="function">normalize</span>(<span class="property">UNITY_MATRIX_V</span>[<span class="number">1</span>].<span class="property">xyz</span>);
+                
+                worldPos += (cameraRight * rotatedVertex.<span class="property">x</span> + cameraUp * rotatedVertex.<span class="property">y</span>) * p.<span class="property">size</span>;
+                
+                o.<span class="property">vertex</span> = <span class="function">mul</span>(<span class="property">UNITY_MATRIX_VP</span>, <span class="type">float4</span>(worldPos, <span class="number">1.0</span>));
+                o.<span class="property">color</span> = p.<span class="property">color</span>;
+                
+                <span class="keyword">return</span> o;
+            <span class="bracket">}</span>
+            
+            <span class="type">float4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> tex = <span class="function">tex2D</span>(<span class="property">_MainTex</span>, i.<span class="property">texcoord</span>);
+                <span class="keyword">return</span> tex * i.<span class="property">color</span> * <span class="property">_TintColor</span>;
+            <span class="bracket">}</span>
+            <span class="keyword">ENDHLSL</span>
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🎯 파티클 효과 라이브러리</h2>
+                
+                <p>다양한 상황에서 사용할 수 있는 파티클 효과들을 정리해보겠습니다.</p>
+
+                <div class="particle-types">
+                    <div class="type-card fire">
+                        <div class="type-icon">🔥</div>
+                        <h4>불 효과</h4>
+                        <p><strong>Additive 블렌딩</strong><br>
+                        상승 움직임, 노이즈 디스토션<br>
+                        주황-빨강 그라디언트</p>
+                    </div>
+                    <div class="type-card magic">
+                        <div class="type-icon">✨</div>
+                        <h4>마법 효과</h4>
+                        <p><strong>Screen 블렌딩</strong><br>
+                        반짝임, 회전, 펄스<br>
+                        파랑-보라 색상</p>
+                    </div>
+                    <div class="type-card smoke">
+                        <div class="type-icon">💨</div>
+                        <h4>연기 효과</h4>
+                        <p><strong>Alpha 블렌딩</strong><br>
+                        볼류메트릭 노이즈<br>
+                        회색 그라디언트</p>
+                    </div>
+                    <div class="type-card energy">
+                        <div class="type-icon">⚡</div>
+                        <h4>에너지 효과</h4>
+                        <p><strong>Additive 블렌딩</strong><br>
+                        전기 아크, 빠른 움직임<br>
+                        노랑-흰색 색상</p>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 파티클 최적화 팁:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>LOD 시스템:</strong> 거리별로 파티클 수와 품질 조절</li>
+                        <li><strong>오브젝트 풀링:</strong> 파티클 재사용으로 메모리 절약</li>
+                        <li><strong>컬링:</strong> 화면 밖 파티클 비활성화</li>
+                        <li><strong>배칭:</strong> 같은 머티리얼 파티클 그룹화</li>
+                        <li><strong>GPU 인스턴싱:</strong> 대량 파티클 효율적 렌더링</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ 주의사항:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>오버드로우:</strong> 투명 파티클의 과도한 겹침 주의</li>
+                        <li><strong>메모리 관리:</strong> 파티클 수 제한과 생명주기 관리</li>
+                        <li><strong>플랫폼 최적화:</strong> 모바일에서 파티클 수 대폭 감소</li>
+                        <li><strong>물리 연산:</strong> 복잡한 물리는 성능에 큰 영향</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="toon-shader.html" class="nav-button prev">
+                    <i class="fas fa-chevron-left"></i>
+                    이전: 툰 셰이더
+                </a>
+                <a href="../index.html" class="nav-button home">
+                    홈으로 돌아가기
+                    <i class="fas fa-home"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+</body>
+</html> 

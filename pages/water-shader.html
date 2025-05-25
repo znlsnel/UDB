@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>물 셰이더 제작 - Unity Shader Programming Guide</title>
+    <title>물 셰이더 - Unity Shader Programming Guide</title>
     <link rel="stylesheet" href="../styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -14,9 +14,10 @@
             padding-top: 100px;
         }
         .content-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 2rem;
+            line-height: 1.7;
         }
         .page-header {
             text-align: center;
@@ -29,14 +30,6 @@
         }
         .page-subtitle {
             font-size: 1.2rem;
-            color: #666;
-        }
-        .content-placeholder {
-            background: #f8fafc;
-            border: 2px dashed #cbd5e0;
-            border-radius: 10px;
-            padding: 3rem;
-            text-align: center;
             color: #666;
         }
         .back-button {
@@ -55,6 +48,274 @@
         .back-button:hover {
             background: #5a67d8;
             transform: translateY(-2px);
+        }
+        .content-section {
+            margin: 2rem 0;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        .subsection-title {
+            font-size: 1.4rem;
+            color: #667eea;
+            margin: 2rem 0 1rem 0;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .code-example {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            border: 1px solid #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .code-example .keyword {
+            color: #569cd6;
+            font-weight: 500;
+        }
+        .code-example .string {
+            color: #ce9178;
+        }
+        .code-example .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        .code-example .type {
+            color: #4ec9b0;
+        }
+        .code-example .number {
+            color: #b5cea8;
+        }
+        .code-example .property {
+            color: #9cdcfe;
+        }
+        .code-example .bracket {
+            color: #ffd700;
+        }
+        .code-example .function {
+            color: #dcdcaa;
+        }
+        .water-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .feature-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .feature-card .feature-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .feature-card.waves .feature-badge {
+            background: #06b6d4;
+        }
+        .feature-card.reflection .feature-badge {
+            background: #3b82f6;
+        }
+        .feature-card.foam .feature-badge {
+            background: #10b981;
+        }
+        .feature-card.depth .feature-badge {
+            background: #8b5cf6;
+        }
+        .feature-card.caustics .feature-badge {
+            background: #f59e0b;
+        }
+        .feature-card.interaction .feature-badge {
+            background: #ef4444;
+        }
+        .water-demo {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7, #0369a1);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .water-demo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0,10 Q25,0 50,10 T100,10 V20 H0 Z" fill="rgba(255,255,255,0.1)"/></svg>') repeat-x;
+            animation: wave 3s ease-in-out infinite;
+        }
+        @keyframes wave {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-50px); }
+        }
+        .water-demo h3 {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1rem;
+        }
+        .water-demo p {
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+        }
+        .wave-equation {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px solid #cbd5e0;
+        }
+        .wave-visual {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .wave-component {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        .wave-component.amplitude {
+            border-color: #10b981;
+            color: #10b981;
+        }
+        .wave-component.frequency {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        .wave-component.speed {
+            border-color: #f59e0b;
+            color: #f59e0b;
+        }
+        .wave-component.direction {
+            border-color: #8b5cf6;
+            color: #8b5cf6;
+        }
+        .tip-box {
+            background: linear-gradient(135deg, #10b98120, #059f4620);
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box {
+            background: linear-gradient(135deg, #fbbf2420, #f5935420);
+            border-left: 4px solid #f59354;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .shader-stages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .stage-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .stage-card .stage-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+            font-weight: bold;
+        }
+        .stage-card h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            justify-content: center;
+        }
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        .nav-button.prev {
+            background: linear-gradient(135deg, #6b7280, #9ca3af);
+        }
+        .nav-button.prev:hover {
+            box-shadow: 0 8px 25px rgba(107, 114, 128, 0.3);
+        }
+        .nav-button.next {
+            background: linear-gradient(135deg, #10b981, #059f46);
+        }
+        .nav-button.next:hover {
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
         }
     </style>
 </head>
@@ -94,15 +355,543 @@
             </a>
             
             <div class="page-header">
-                <h1 class="page-title">물 셰이더 제작</h1>
-                <p class="page-subtitle">실시간 물 표면 시뮬레이션</p>
+                <h1 class="page-title">물 셰이더</h1>
+                <p class="page-subtitle">실시간 물 시뮬레이션과 고급 렌더링 기법</p>
             </div>
 
-            <div class="content-placeholder">
-                <i class="fas fa-water" style="font-size: 3rem; margin-bottom: 1rem; color: #667eea;"></i>
-                <h3>콘텐츠 준비 중</h3>
-                <p>이 페이지의 내용은 곧 추가될 예정입니다.</p>
-                <p>실시간 물 표면 시뮬레이션에 대한 상세한 내용을 다룰 예정입니다.</p>
+            <div class="water-demo">
+                <h3>🌊 실시간 물 렌더링</h3>
+                <p>파도, 반사, 굴절, 거품까지 모든 것을 포함한 완전한 물 셰이더를 만들어보겠습니다.</p>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🌊 물 셰이더의 핵심 요소</h2>
+                
+                <p><strong>물 셰이더</strong>는 게임에서 가장 복잡하고 아름다운 시각 효과 중 하나입니다. 실제 물의 물리적 특성을 시뮬레이션하여 몰입감 있는 경험을 제공합니다.</p>
+
+                <div class="water-features">
+                    <div class="feature-card waves">
+                        <div class="feature-badge">Waves</div>
+                        <h4><i class="fas fa-water"></i> 파도 시뮬레이션</h4>
+                        <p><strong>Gerstner 파도:</strong> 실제 물의 움직임 모방</p>
+                        <p><strong>다중 파도:</strong> 여러 파도의 합성</p>
+                        <p><strong>방향성 파도:</strong> 바람 방향 고려</p>
+                        <p><strong>시간 기반 애니메이션:</strong> 자연스러운 움직임</p>
+                    </div>
+                    
+                    <div class="feature-card reflection">
+                        <div class="feature-badge">Reflection</div>
+                        <h4><i class="fas fa-mirror"></i> 반사 & 굴절</h4>
+                        <p><strong>스크린 스페이스 반사:</strong> 실시간 반사</p>
+                        <p><strong>큐브맵 반사:</strong> 환경 반사</p>
+                        <p><strong>프레넬 효과:</strong> 각도별 반사율</p>
+                        <p><strong>굴절 왜곡:</strong> 물 아래 왜곡 효과</p>
+                    </div>
+                    
+                    <div class="feature-card foam">
+                        <div class="feature-badge">Foam</div>
+                        <h4><i class="fas fa-cloud"></i> 거품 & 폼</h4>
+                        <p><strong>깊이 기반 폼:</strong> 얕은 곳의 거품</p>
+                        <p><strong>교차점 폼:</strong> 오브젝트와의 경계</p>
+                        <p><strong>파도 정점 폼:</strong> 파도 꼭대기 거품</p>
+                        <p><strong>노이즈 텍스처:</strong> 자연스러운 패턴</p>
+                    </div>
+                    
+                    <div class="feature-card depth">
+                        <div class="feature-badge">Depth</div>
+                        <h4><i class="fas fa-layer-group"></i> 깊이 효과</h4>
+                        <p><strong>깊이 기반 색상:</strong> 깊이별 색상 변화</p>
+                        <p><strong>투명도 조절:</strong> 깊이별 투명도</p>
+                        <p><strong>수중 안개:</strong> 거리별 흐림 효과</p>
+                        <p><strong>볼류메트릭 라이팅:</strong> 수중 광선</p>
+                    </div>
+                    
+                    <div class="feature-card caustics">
+                        <div class="feature-badge">Caustics</div>
+                        <h4><i class="fas fa-sun"></i> 코스틱 효과</h4>
+                        <p><strong>광선 집중:</strong> 물 표면 굴절 패턴</p>
+                        <p><strong>애니메이션 패턴:</strong> 움직이는 빛 무늬</p>
+                        <p><strong>강도 조절:</strong> 깊이별 강도 변화</p>
+                        <p><strong>색상 분산:</strong> 프리즘 효과</p>
+                    </div>
+                    
+                    <div class="feature-card interaction">
+                        <div class="feature-badge">Interaction</div>
+                        <h4><i class="fas fa-hand-paper"></i> 상호작용</h4>
+                        <p><strong>물체 충돌:</strong> 물방울과 파문</p>
+                        <p><strong>동적 파도:</strong> 실시간 파도 생성</p>
+                        <p><strong>부력 시뮬레이션:</strong> 떠있는 오브젝트</p>
+                        <p><strong>파티클 연동:</strong> 물방울 파티클</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🌊 Gerstner 파도 구현</h2>
+                
+                <p>실제 물의 파도를 시뮬레이션하는 Gerstner 파도 방정식을 구현해보겠습니다.</p>
+
+                <div class="wave-equation">
+                    <h3 style="margin-bottom: 1.5rem; color: #333;">Gerstner 파도 방정식</h3>
+                    <div class="wave-visual">
+                        <div class="wave-component amplitude">
+                            <strong>진폭 (A)</strong><br>
+                            <small>파도의 높이</small>
+                        </div>
+                        <div style="color: #667eea; font-size: 1.5rem;">×</div>
+                        <div class="wave-component frequency">
+                            <strong>주파수 (ω)</strong><br>
+                            <small>파도의 빈도</small>
+                        </div>
+                        <div style="color: #667eea; font-size: 1.5rem;">×</div>
+                        <div class="wave-component speed">
+                            <strong>속도 (φ)</strong><br>
+                            <small>파도의 이동 속도</small>
+                        </div>
+                        <div style="color: #667eea; font-size: 1.5rem;">×</div>
+                        <div class="wave-component direction">
+                            <strong>방향 (D)</strong><br>
+                            <small>파도의 진행 방향</small>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">기본 파도 셰이더</h3>
+                
+                <div class="code-example">
+<span class="keyword">Shader</span> <span class="string">"Water/GerstnerWaves"</span>
+<span class="bracket">{</span>
+    <span class="keyword">Properties</span>
+    <span class="bracket">{</span>
+        <span class="property">_WaterColor</span> (<span class="string">"Water Color"</span>, <span class="keyword">Color</span>) = (<span class="number">0.1</span>, <span class="number">0.4</span>, <span class="number">0.7</span>, <span class="number">0.8</span>)
+        <span class="property">_DeepWaterColor</span> (<span class="string">"Deep Water Color"</span>, <span class="keyword">Color</span>) = (<span class="number">0.0</span>, <span class="number">0.2</span>, <span class="number">0.5</span>, <span class="number">1.0</span>)
+        <span class="property">_WaveAmplitude</span> (<span class="string">"Wave Amplitude"</span>, <span class="keyword">Range</span>(<span class="number">0</span>, <span class="number">2</span>)) = <span class="number">0.5</span>
+        <span class="property">_WaveFrequency</span> (<span class="string">"Wave Frequency"</span>, <span class="keyword">Range</span>(<span class="number">0</span>, <span class="number">10</span>)) = <span class="number">2.0</span>
+        <span class="property">_WaveSpeed</span> (<span class="string">"Wave Speed"</span>, <span class="keyword">Range</span>(<span class="number">0</span>, <span class="number">5</span>)) = <span class="number">1.0</span>
+        <span class="property">_WaveDirection</span> (<span class="string">"Wave Direction"</span>, <span class="keyword">Vector</span>) = (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)
+        <span class="property">_NormalMap</span> (<span class="string">"Normal Map"</span>, <span class="keyword">2D</span>) = <span class="string">"bump"</span> <span class="bracket">{}</span>
+        <span class="property">_Reflection</span> (<span class="string">"Reflection"</span>, <span class="keyword">Cube</span>) = <span class="string">"_Skybox"</span> <span class="bracket">{}</span>
+    <span class="bracket">}</span>
+    
+    <span class="keyword">SubShader</span>
+    <span class="bracket">{</span>
+        <span class="keyword">Tags</span> <span class="bracket">{</span> <span class="string">"RenderType"</span>=<span class="string">"Transparent"</span> <span class="string">"Queue"</span>=<span class="string">"Transparent"</span> <span class="bracket">}</span>
+        <span class="keyword">LOD</span> <span class="number">200</span>
+        
+        <span class="keyword">Pass</span>
+        <span class="bracket">{</span>
+            <span class="keyword">HLSLPROGRAM</span>
+            <span class="keyword">#pragma vertex</span> vert
+            <span class="keyword">#pragma fragment</span> frag
+            <span class="keyword">#include</span> <span class="string">"UnityCG.cginc"</span>
+            
+            <span class="keyword">struct</span> <span class="type">appdata</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> vertex : <span class="keyword">POSITION</span>;
+                <span class="type">float3</span> normal : <span class="keyword">NORMAL</span>;
+                <span class="type">float2</span> uv : <span class="keyword">TEXCOORD0</span>;
+            <span class="bracket">}</span>;
+            
+            <span class="keyword">struct</span> <span class="type">v2f</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> pos : <span class="keyword">SV_POSITION</span>;
+                <span class="type">float3</span> worldPos : <span class="keyword">TEXCOORD0</span>;
+                <span class="type">float3</span> worldNormal : <span class="keyword">TEXCOORD1</span>;
+                <span class="type">float2</span> uv : <span class="keyword">TEXCOORD2</span>;
+                <span class="type">float4</span> screenPos : <span class="keyword">TEXCOORD3</span>;
+            <span class="bracket">}</span>;
+            
+            <span class="type">float4</span> <span class="property">_WaterColor</span>, <span class="property">_DeepWaterColor</span>;
+            <span class="type">float</span> <span class="property">_WaveAmplitude</span>, <span class="property">_WaveFrequency</span>, <span class="property">_WaveSpeed</span>;
+            <span class="type">float4</span> <span class="property">_WaveDirection</span>;
+            <span class="keyword">sampler2D</span> <span class="property">_NormalMap</span>;
+            <span class="keyword">samplerCUBE</span> <span class="property">_Reflection</span>;
+            <span class="keyword">sampler2D</span> <span class="property">_CameraDepthTexture</span>;
+            
+            <span class="comment">// Gerstner 파도 함수</span>
+            <span class="type">float3</span> <span class="function">GerstnerWave</span>(<span class="type">float2</span> pos, <span class="type">float</span> amplitude, <span class="type">float</span> frequency, <span class="type">float</span> speed, <span class="type">float2</span> direction)
+            <span class="bracket">{</span>
+                <span class="type">float</span> phase = frequency * <span class="function">dot</span>(direction, pos) + speed * <span class="property">_Time</span>.<span class="property">y</span>;
+                <span class="type">float</span> steepness = <span class="number">0.5</span>; <span class="comment">// 파도의 가파름</span>
+                
+                <span class="type">float3</span> wave;
+                wave.<span class="property">x</span> = steepness * amplitude * direction.<span class="property">x</span> * <span class="function">cos</span>(phase);
+                wave.<span class="property">z</span> = steepness * amplitude * direction.<span class="property">y</span> * <span class="function">cos</span>(phase);
+                wave.<span class="property">y</span> = amplitude * <span class="function">sin</span>(phase);
+                
+                <span class="keyword">return</span> wave;
+            <span class="bracket">}</span>
+            
+            <span class="comment">// 다중 파도 합성</span>
+            <span class="type">float3</span> <span class="function">CalculateWaves</span>(<span class="type">float2</span> worldPos)
+            <span class="bracket">{</span>
+                <span class="type">float3</span> waves = <span class="number">0</span>;
+                
+                <span class="comment">// 주 파도</span>
+                waves += <span class="function">GerstnerWave</span>(worldPos, <span class="property">_WaveAmplitude</span>, <span class="property">_WaveFrequency</span>, <span class="property">_WaveSpeed</span>, <span class="property">_WaveDirection</span>.<span class="property">xy</span>);
+                
+                <span class="comment">// 보조 파도들</span>
+                waves += <span class="function">GerstnerWave</span>(worldPos, <span class="property">_WaveAmplitude</span> * <span class="number">0.5</span>, <span class="property">_WaveFrequency</span> * <span class="number">1.5</span>, <span class="property">_WaveSpeed</span> * <span class="number">1.2</span>, <span class="type">float2</span>(<span class="number">0.7</span>, <span class="number">0.7</span>));
+                waves += <span class="function">GerstnerWave</span>(worldPos, <span class="property">_WaveAmplitude</span> * <span class="number">0.3</span>, <span class="property">_WaveFrequency</span> * <span class="number">2.0</span>, <span class="property">_WaveSpeed</span> * <span class="number">0.8</span>, <span class="type">float2</span>(-<span class="number">0.5</span>, <span class="number">0.8</span>));
+                
+                <span class="keyword">return</span> waves;
+            <span class="bracket">}</span>
+            
+            <span class="type">v2f</span> <span class="function">vert</span>(<span class="type">appdata</span> v)
+            <span class="bracket">{</span>
+                <span class="type">v2f</span> o;
+                
+                <span class="comment">// 월드 좌표 계산</span>
+                <span class="type">float3</span> worldPos = <span class="function">mul</span>(<span class="property">unity_ObjectToWorld</span>, v.<span class="property">vertex</span>).<span class="property">xyz</span>;
+                
+                <span class="comment">// 파도 변위 적용</span>
+                <span class="type">float3</span> waveOffset = <span class="function">CalculateWaves</span>(worldPos.<span class="property">xz</span>);
+                worldPos += waveOffset;
+                
+                o.<span class="property">pos</span> = <span class="function">mul</span>(<span class="property">UNITY_MATRIX_VP</span>, <span class="type">float4</span>(worldPos, <span class="number">1.0</span>));
+                o.<span class="property">worldPos</span> = worldPos;
+                o.<span class="property">worldNormal</span> = <span class="function">UnityObjectToWorldNormal</span>(v.<span class="property">normal</span>);
+                o.<span class="property">uv</span> = v.<span class="property">uv</span>;
+                o.<span class="property">screenPos</span> = <span class="function">ComputeScreenPos</span>(o.<span class="property">pos</span>);
+                
+                <span class="keyword">return</span> o;
+            <span class="bracket">}</span>
+            
+            <span class="type">float4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+            <span class="bracket">{</span>
+                <span class="comment">// 깊이 기반 색상</span>
+                <span class="type">float</span> depth = <span class="function">LinearEyeDepth</span>(<span class="function">tex2Dproj</span>(<span class="property">_CameraDepthTexture</span>, i.<span class="property">screenPos</span>).<span class="property">r</span>);
+                <span class="type">float</span> waterDepth = depth - i.<span class="property">screenPos</span>.<span class="property">w</span>;
+                <span class="type">float</span> depthFactor = <span class="function">saturate</span>(waterDepth / <span class="number">5.0</span>);
+                
+                <span class="comment">// 물 색상 보간</span>
+                <span class="type">float4</span> waterColor = <span class="function">lerp</span>(<span class="property">_WaterColor</span>, <span class="property">_DeepWaterColor</span>, depthFactor);
+                
+                <span class="comment">// 노멀 맵 샘플링</span>
+                <span class="type">float2</span> normalUV = i.<span class="property">uv</span> + <span class="property">_Time</span>.<span class="property">y</span> * <span class="number">0.1</span>;
+                <span class="type">float3</span> normal = <span class="function">UnpackNormal</span>(<span class="function">tex2D</span>(<span class="property">_NormalMap</span>, normalUV));
+                
+                <span class="comment">// 반사 계산</span>
+                <span class="type">float3</span> viewDir = <span class="function">normalize</span>(<span class="property">_WorldSpaceCameraPos</span> - i.<span class="property">worldPos</span>);
+                <span class="type">float3</span> reflectDir = <span class="function">reflect</span>(-viewDir, normal);
+                <span class="type">float4</span> reflection = <span class="function">texCUBE</span>(<span class="property">_Reflection</span>, reflectDir);
+                
+                <span class="comment">// 프레넬 효과</span>
+                <span class="type">float</span> fresnel = <span class="function">pow</span>(<span class="number">1.0</span> - <span class="function">saturate</span>(<span class="function">dot</span>(normal, viewDir)), <span class="number">2.0</span>);
+                
+                <span class="comment">// 최종 색상 합성</span>
+                <span class="type">float4</span> finalColor = <span class="function">lerp</span>(waterColor, reflection, fresnel * <span class="number">0.8</span>);
+                finalColor.<span class="property">a</span> = waterColor.<span class="property">a</span>;
+                
+                <span class="keyword">return</span> finalColor;
+            <span class="bracket">}</span>
+            <span class="keyword">ENDHLSL</span>
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🫧 거품과 폼 효과</h2>
+                
+                <p>물의 가장자리와 파도 정점에서 생성되는 자연스러운 거품 효과를 구현해보겠습니다.</p>
+
+                <h3 class="subsection-title">깊이 기반 폼 셰이더</h3>
+                
+                <div class="code-example">
+<span class="comment">// 거품 효과를 위한 추가 프래그먼트 셰이더 코드</span>
+<span class="type">float4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+<span class="bracket">{</span>
+    <span class="comment">// 기본 물 색상 계산 (이전 코드와 동일)</span>
+    <span class="type">float</span> depth = <span class="function">LinearEyeDepth</span>(<span class="function">tex2Dproj</span>(<span class="property">_CameraDepthTexture</span>, i.<span class="property">screenPos</span>).<span class="property">r</span>);
+    <span class="type">float</span> waterDepth = depth - i.<span class="property">screenPos</span>.<span class="property">w</span>;
+    
+    <span class="comment">// 거품 효과 계산</span>
+    <span class="type">float</span> foamDepth = <span class="function">saturate</span>(waterDepth / <span class="number">0.5</span>); <span class="comment">// 얕은 곳에서 거품</span>
+    <span class="type">float</span> foamMask = <span class="number">1.0</span> - foamDepth;
+    
+    <span class="comment">// 노이즈 텍스처로 거품 패턴 생성</span>
+    <span class="type">float2</span> foamUV = i.<span class="property">uv</span> * <span class="number">10.0</span> + <span class="property">_Time</span>.<span class="property">y</span> * <span class="type">float2</span>(<span class="number">0.1</span>, <span class="number">0.05</span>);
+    <span class="type">float</span> foamNoise = <span class="function">tex2D</span>(<span class="property">_FoamTexture</span>, foamUV).<span class="property">r</span>;
+    
+    <span class="comment">// 파도 정점에서의 거품</span>
+    <span class="type">float</span> waveHeight = i.<span class="property">worldPos</span>.<span class="property">y</span> - <span class="property">_WaterLevel</span>;
+    <span class="type">float</span> waveFoam = <span class="function">saturate</span>(waveHeight / <span class="property">_WaveAmplitude</span> - <span class="number">0.7</span>);
+    
+    <span class="comment">// 거품 강도 계산</span>
+    <span class="type">float</span> foamIntensity = <span class="function">saturate</span>(foamMask + waveFoam) * foamNoise;
+    
+    <span class="comment">// 거품 색상 적용</span>
+    <span class="type">float3</span> foamColor = <span class="type">float3</span>(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>);
+    <span class="type">float4</span> waterColor = <span class="function">CalculateWaterColor</span>(i); <span class="comment">// 기본 물 색상</span>
+    
+    <span class="comment">// 최종 색상 블렌딩</span>
+    <span class="type">float4</span> finalColor = <span class="function">lerp</span>(waterColor, <span class="type">float4</span>(foamColor, <span class="number">1.0</span>), foamIntensity);
+    
+    <span class="keyword">return</span> finalColor;
+<span class="bracket">}</span>
+                </div>
+
+                <h3 class="subsection-title">코스틱 효과 구현</h3>
+                
+                <div class="code-example">
+<span class="comment">// 코스틱 (물 바닥 빛 무늬) 효과</span>
+<span class="type">float</span> <span class="function">CalculateCaustics</span>(<span class="type">float2</span> worldPos, <span class="type">float</span> depth)
+<span class="bracket">{</span>
+    <span class="comment">// 다중 스케일 노이즈로 코스틱 패턴 생성</span>
+    <span class="type">float2</span> causticsUV1 = worldPos * <span class="number">0.5</span> + <span class="property">_Time</span>.<span class="property">y</span> * <span class="type">float2</span>(<span class="number">0.03</span>, <span class="number">0.02</span>);
+    <span class="type">float2</span> causticsUV2 = worldPos * <span class="number">0.8</span> + <span class="property">_Time</span>.<span class="property">y</span> * <span class="type">float2</span>(-<span class="number">0.02</span>, <span class="number">0.04</span>);
+    
+    <span class="type">float</span> caustics1 = <span class="function">tex2D</span>(<span class="property">_CausticsTexture</span>, causticsUV1).<span class="property">r</span>;
+    <span class="type">float</span> caustics2 = <span class="function">tex2D</span>(<span class="property">_CausticsTexture</span>, causticsUV2).<span class="property">r</span>;
+    
+    <span class="comment">// 두 패턴을 곱해서 더 복잡한 무늬 생성</span>
+    <span class="type">float</span> caustics = caustics1 * caustics2;
+    
+    <span class="comment">// 깊이에 따른 강도 조절</span>
+    <span class="type">float</span> depthFade = <span class="function">exp</span>(-depth * <span class="number">0.5</span>);
+    caustics *= depthFade;
+    
+    <span class="comment">// 대비 증가</span>
+    caustics = <span class="function">pow</span>(caustics, <span class="number">2.0</span>) * <span class="number">2.0</span>;
+    
+    <span class="keyword">return</span> <span class="function">saturate</span>(caustics);
+<span class="bracket">}</span>
+
+<span class="comment">// 수중 오브젝트에 코스틱 적용</span>
+<span class="type">float4</span> <span class="function">ApplyCausticsToUnderwater</span>(<span class="type">float4</span> baseColor, <span class="type">float3</span> worldPos)
+<span class="bracket">{</span>
+    <span class="type">float</span> caustics = <span class="function">CalculateCaustics</span>(worldPos.<span class="property">xz</span>, worldPos.<span class="property">y</span>);
+    
+    <span class="comment">// 코스틱을 라이팅에 추가</span>
+    <span class="type">float3</span> causticsColor = <span class="type">float3</span>(<span class="number">0.8</span>, <span class="number">1.0</span>, <span class="number">1.2</span>) * caustics;
+    baseColor.<span class="property">rgb</span> += causticsColor * <span class="property">_CausticsIntensity</span>;
+    
+    <span class="keyword">return</span> baseColor;
+<span class="bracket">}</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🎮 상호작용 시스템</h2>
+                
+                <p>플레이어나 오브젝트와 물의 상호작용을 구현하여 더욱 몰입감 있는 경험을 제공합니다.</p>
+
+                <h3 class="subsection-title">물체 충돌 감지 및 파문 생성</h3>
+                
+                <div class="code-example">
+<span class="comment">// C# 스크립트: 물 상호작용 매니저</span>
+<span class="keyword">using</span> UnityEngine;
+<span class="keyword">using</span> System.Collections.Generic;
+
+<span class="keyword">public class</span> <span class="type">WaterInteractionManager</span> : <span class="type">MonoBehaviour</span>
+<span class="bracket">{</span>
+    <span class="keyword">public</span> <span class="type">Material</span> waterMaterial;
+    <span class="keyword">public</span> <span class="type">LayerMask</span> interactionLayers = -<span class="number">1</span>;
+    <span class="keyword">public</span> <span class="type">float</span> rippleStrength = <span class="number">1.0f</span>;
+    <span class="keyword">public</span> <span class="type">float</span> rippleSpeed = <span class="number">2.0f</span>;
+    
+    <span class="keyword">private</span> <span class="type">List</span><<span class="type">RippleData</span>> activeRipples = <span class="keyword">new</span> <span class="type">List</span><<span class="type">RippleData</span>>();
+    <span class="keyword">private</span> <span class="type">Vector4</span>[] ripplePositions = <span class="keyword">new</span> <span class="type">Vector4</span>[<span class="number">10</span>];
+    <span class="keyword">private</span> <span class="type">Vector4</span>[] rippleData = <span class="keyword">new</span> <span class="type">Vector4</span>[<span class="number">10</span>];
+    
+    <span class="keyword">struct</span> <span class="type">RippleData</span>
+    <span class="bracket">{</span>
+        <span class="keyword">public</span> <span class="type">Vector3</span> position;
+        <span class="keyword">public</span> <span class="type">float</span> startTime;
+        <span class="keyword">public</span> <span class="type">float</span> strength;
+        <span class="keyword">public</span> <span class="type">float</span> maxRadius;
+    <span class="bracket">}</span>
+    
+    <span class="keyword">void</span> <span class="function">Update</span>()
+    <span class="bracket">{</span>
+        <span class="function">UpdateRipples</span>();
+        <span class="function">SendRipplesToShader</span>();
+    <span class="bracket">}</span>
+    
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="function">CreateRipple</span>(<span class="type">Vector3</span> position, <span class="type">float</span> strength = <span class="number">1.0f</span>)
+    <span class="bracket">{</span>
+        <span class="keyword">if</span> (activeRipples.<span class="property">Count</span> >= <span class="number">10</span>) <span class="keyword">return</span>;
+        
+        <span class="type">RippleData</span> newRipple = <span class="keyword">new</span> <span class="type">RippleData</span>
+        <span class="bracket">{</span>
+            position = position,
+            startTime = <span class="type">Time</span>.<span class="property">time</span>,
+            strength = strength * rippleStrength,
+            maxRadius = <span class="number">5.0f</span>
+        <span class="bracket">}</span>;
+        
+        activeRipples.<span class="function">Add</span>(newRipple);
+    <span class="bracket">}</span>
+    
+    <span class="keyword">void</span> <span class="function">UpdateRipples</span>()
+    <span class="bracket">{</span>
+        <span class="keyword">for</span> (<span class="type">int</span> i = activeRipples.<span class="property">Count</span> - <span class="number">1</span>; i >= <span class="number">0</span>; i--)
+        <span class="bracket">{</span>
+            <span class="type">RippleData</span> ripple = activeRipples[i];
+            <span class="type">float</span> age = <span class="type">Time</span>.<span class="property">time</span> - ripple.<span class="property">startTime</span>;
+            <span class="type">float</span> radius = age * rippleSpeed;
+            
+            <span class="keyword">if</span> (radius > ripple.<span class="property">maxRadius</span>)
+            <span class="bracket">{</span>
+                activeRipples.<span class="function">RemoveAt</span>(i);
+                <span class="keyword">continue</span>;
+            <span class="bracket">}</span>
+            
+            <span class="comment">// 셰이더로 전달할 데이터 준비</span>
+            ripplePositions[i] = <span class="keyword">new</span> <span class="type">Vector4</span>(ripple.<span class="property">position</span>.<span class="property">x</span>, ripple.<span class="property">position</span>.<span class="property">z</span>, radius, <span class="number">0</span>);
+            rippleData[i] = <span class="keyword">new</span> <span class="type">Vector4</span>(ripple.<span class="property">strength</span>, ripple.<span class="property">maxRadius</span>, age, <span class="number">0</span>);
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+    
+    <span class="keyword">void</span> <span class="function">SendRipplesToShader</span>()
+    <span class="bracket">{</span>
+        waterMaterial.<span class="function">SetVectorArray</span>(<span class="string">"_RipplePositions"</span>, ripplePositions);
+        waterMaterial.<span class="function">SetVectorArray</span>(<span class="string">"_RippleData"</span>, rippleData);
+        waterMaterial.<span class="function">SetInt</span>(<span class="string">"_RippleCount"</span>, activeRipples.<span class="property">Count</span>);
+    <span class="bracket">}</span>
+    
+    <span class="keyword">void</span> <span class="function">OnTriggerEnter</span>(<span class="type">Collider</span> other)
+    <span class="bracket">{</span>
+        <span class="keyword">if</span> (((1 << other.<span class="property">gameObject</span>.<span class="property">layer</span>) & interactionLayers) != <span class="number">0</span>)
+        <span class="bracket">{</span>
+            <span class="type">Vector3</span> impactPoint = other.<span class="property">ClosestPoint</span>(<span class="property">transform</span>.<span class="property">position</span>);
+            <span class="type">float</span> impactStrength = other.<span class="property">attachedRigidbody</span> ? 
+                other.<span class="property">attachedRigidbody</span>.<span class="property">velocity</span>.<span class="property">magnitude</span> : <span class="number">1.0f</span>;
+            
+            <span class="function">CreateRipple</span>(impactPoint, impactStrength);
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+
+                <h3 class="subsection-title">셰이더에서 파문 처리</h3>
+                
+                <div class="code-example">
+<span class="comment">// 셰이더에서 동적 파문 처리</span>
+<span class="type">float4</span> <span class="property">_RipplePositions</span>[<span class="number">10</span>];
+<span class="type">float4</span> <span class="property">_RippleData</span>[<span class="number">10</span>];
+<span class="type">int</span> <span class="property">_RippleCount</span>;
+
+<span class="type">float</span> <span class="function">CalculateRippleEffect</span>(<span class="type">float2</span> worldPos)
+<span class="bracket">{</span>
+    <span class="type">float</span> totalRipple = <span class="number">0.0</span>;
+    
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i < <span class="property">_RippleCount</span>; i++)
+    <span class="bracket">{</span>
+        <span class="type">float2</span> ripplePos = <span class="property">_RipplePositions</span>[i].<span class="property">xy</span>;
+        <span class="type">float</span> currentRadius = <span class="property">_RipplePositions</span>[i].<span class="property">z</span>;
+        <span class="type">float</span> strength = <span class="property">_RippleData</span>[i].<span class="property">x</span>;
+        <span class="type">float</span> maxRadius = <span class="property">_RippleData</span>[i].<span class="property">y</span>;
+        <span class="type">float</span> age = <span class="property">_RippleData</span>[i].<span class="property">z</span>;
+        
+        <span class="type">float</span> distance = <span class="function">length</span>(worldPos - ripplePos);
+        
+        <span class="comment">// 링 형태의 파문</span>
+        <span class="type">float</span> ringWidth = <span class="number">0.5</span>;
+        <span class="type">float</span> ringFactor = <span class="function">exp</span>(-<span class="function">pow</span>((distance - currentRadius) / ringWidth, <span class="number">2.0</span>));
+        
+        <span class="comment">// 시간에 따른 감쇠</span>
+        <span class="type">float</span> decay = <span class="function">exp</span>(-age * <span class="number">2.0</span>);
+        
+        totalRipple += ringFactor * strength * decay;
+    <span class="bracket">}</span>
+    
+    <span class="keyword">return</span> totalRipple;
+<span class="bracket">}</span>
+
+<span class="comment">// 버텍스 셰이더에서 파문 적용</span>
+<span class="type">v2f</span> <span class="function">vert</span>(<span class="type">appdata</span> v)
+<span class="bracket">{</span>
+    <span class="type">v2f</span> o;
+    
+    <span class="type">float3</span> worldPos = <span class="function">mul</span>(<span class="property">unity_ObjectToWorld</span>, v.<span class="property">vertex</span>).<span class="property">xyz</span>;
+    
+    <span class="comment">// 기본 파도 + 동적 파문</span>
+    <span class="type">float3</span> waveOffset = <span class="function">CalculateWaves</span>(worldPos.<span class="property">xz</span>);
+    <span class="type">float</span> rippleOffset = <span class="function">CalculateRippleEffect</span>(worldPos.<span class="property">xz</span>);
+    
+    worldPos.<span class="property">y</span> += waveOffset.<span class="property">y</span> + rippleOffset;
+    worldPos.<span class="property">xz</span> += waveOffset.<span class="property">xz</span>;
+    
+    o.<span class="property">pos</span> = <span class="function">mul</span>(<span class="property">UNITY_MATRIX_VP</span>, <span class="type">float4</span>(worldPos, <span class="number">1.0</span>));
+    <span class="comment">// ... 나머지 출력 설정</span>
+    
+    <span class="keyword">return</span> o;
+<span class="bracket">}</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🎯 구현 단계별 가이드</h2>
+                
+                <p>완전한 물 셰이더를 단계별로 구현하는 방법을 안내합니다.</p>
+
+                <div class="shader-stages">
+                    <div class="stage-card">
+                        <div class="stage-number">1</div>
+                        <h4>기본 파도</h4>
+                        <p>Gerstner 파도 방정식으로 기본적인 물 표면 움직임 구현</p>
+                    </div>
+                    <div class="stage-card">
+                        <div class="stage-number">2</div>
+                        <h4>색상 & 깊이</h4>
+                        <p>깊이 기반 색상 변화와 투명도 조절 추가</p>
+                    </div>
+                    <div class="stage-card">
+                        <div class="stage-number">3</div>
+                        <h4>반사 & 굴절</h4>
+                        <p>환경 반사와 프레넬 효과, 굴절 왜곡 구현</p>
+                    </div>
+                    <div class="stage-card">
+                        <div class="stage-number">4</div>
+                        <h4>거품 효과</h4>
+                        <p>깊이 기반 폼과 파도 정점 거품 추가</p>
+                    </div>
+                    <div class="stage-card">
+                        <div class="stage-number">5</div>
+                        <h4>코스틱</h4>
+                        <p>수중 빛 무늬와 볼류메트릭 효과 구현</p>
+                    </div>
+                    <div class="stage-card">
+                        <div class="stage-number">6</div>
+                        <h4>상호작용</h4>
+                        <p>동적 파문과 물체 충돌 반응 시스템 완성</p>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 물 셰이더 최적화 팁:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>LOD 시스템:</strong> 거리별로 파도 복잡도 조절</li>
+                        <li><strong>텍스처 아틀라스:</strong> 노멀맵, 폼, 코스틱을 하나로 합치기</li>
+                        <li><strong>인스턴싱:</strong> 여러 물 영역을 효율적으로 렌더링</li>
+                        <li><strong>컬링:</strong> 화면 밖 물 영역 제거</li>
+                        <li><strong>모바일 최적화:</strong> 복잡한 계산을 버텍스 셰이더로 이동</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ 주의사항:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>성능 모니터링:</strong> 복잡한 물 셰이더는 GPU 부하가 클 수 있음</li>
+                        <li><strong>플랫폼별 조정:</strong> 모바일과 PC에서 다른 품질 설정 필요</li>
+                        <li><strong>물리 시뮬레이션:</strong> 부력 계산 시 물 높이 정확히 계산</li>
+                        <li><strong>라이팅 일관성:</strong> 물 표면과 수중 라이팅 통일</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="optimization.html" class="nav-button prev">
+                    <i class="fas fa-chevron-left"></i>
+                    이전: 최적화 기법
+                </a>
+                <a href="toon-shader.html" class="nav-button next">
+                    다음: 툰 셰이더
+                    <i class="fas fa-chevron-right"></i>
+                </a>
             </div>
         </div>
     </main>

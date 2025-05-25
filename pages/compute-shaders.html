@@ -14,9 +14,10 @@
             padding-top: 100px;
         }
         .content-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 2rem;
+            line-height: 1.7;
         }
         .page-header {
             text-align: center;
@@ -29,14 +30,6 @@
         }
         .page-subtitle {
             font-size: 1.2rem;
-            color: #666;
-        }
-        .content-placeholder {
-            background: #f8fafc;
-            border: 2px dashed #cbd5e0;
-            border-radius: 10px;
-            padding: 3rem;
-            text-align: center;
             color: #666;
         }
         .back-button {
@@ -55,6 +48,251 @@
         .back-button:hover {
             background: #5a67d8;
             transform: translateY(-2px);
+        }
+        .content-section {
+            margin: 2rem 0;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        .subsection-title {
+            font-size: 1.4rem;
+            color: #667eea;
+            margin: 2rem 0 1rem 0;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .comparison-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .comparison-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .comparison-card.cpu {
+            border-left: 4px solid #f59e0b;
+        }
+        .comparison-card.gpu {
+            border-left: 4px solid #10b981;
+        }
+        .comparison-card h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        .comparison-card.cpu h4 {
+            color: #f59e0b;
+        }
+        .comparison-card.gpu h4 {
+            color: #10b981;
+        }
+        .code-example {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            border: 1px solid #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .code-example .keyword {
+            color: #569cd6;
+            font-weight: 500;
+        }
+        .code-example .string {
+            color: #ce9178;
+        }
+        .code-example .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        .code-example .type {
+            color: #4ec9b0;
+        }
+        .code-example .number {
+            color: #b5cea8;
+        }
+        .code-example .property {
+            color: #9cdcfe;
+        }
+        .code-example .bracket {
+            color: #ffd700;
+        }
+        .code-example .function {
+            color: #dcdcaa;
+        }
+        .use-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .use-case-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .use-case-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .use-case-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .use-case-card .case-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .use-case-card.physics .case-badge {
+            background: #10b981;
+        }
+        .use-case-card.graphics .case-badge {
+            background: #3b82f6;
+        }
+        .use-case-card.ai .case-badge {
+            background: #f59e0b;
+        }
+        .use-case-card.simulation .case-badge {
+            background: #8b5cf6;
+        }
+        .tip-box {
+            background: linear-gradient(135deg, #10b98120, #059f4620);
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box {
+            background: linear-gradient(135deg, #fbbf2420, #f5935420);
+            border-left: 4px solid #f59354;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .architecture-diagram {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px solid #cbd5e0;
+        }
+        .thread-hierarchy {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .thread-level {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        .thread-level.thread {
+            border-color: #10b981;
+            color: #10b981;
+        }
+        .thread-level.group {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        .thread-level.dispatch {
+            border-color: #f59e0b;
+            color: #f59e0b;
+        }
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .performance-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        .performance-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+        .performance-table tr:hover {
+            background: #f8fafc;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            justify-content: center;
+        }
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        .nav-button.prev {
+            background: linear-gradient(135deg, #6b7280, #9ca3af);
+        }
+        .nav-button.prev:hover {
+            box-shadow: 0 8px 25px rgba(107, 114, 128, 0.3);
         }
     </style>
 </head>
@@ -95,14 +333,454 @@
             
             <div class="page-header">
                 <h1 class="page-title">컴퓨트 셰이더</h1>
-                <p class="page-subtitle">GPU 병렬 처리와 컴퓨트 셰이더 활용</p>
+                <p class="page-subtitle">GPU 병렬 처리의 강력한 활용</p>
             </div>
 
-            <div class="content-placeholder">
-                <i class="fas fa-microchip" style="font-size: 3rem; margin-bottom: 1rem; color: #667eea;"></i>
-                <h3>콘텐츠 준비 중</h3>
-                <p>이 페이지의 내용은 곧 추가될 예정입니다.</p>
-                <p>GPU 병렬 처리와 컴퓨트 셰이더 활용에 대한 상세한 내용을 다룰 예정입니다.</p>
+            <div class="content-section">
+                <h2 class="section-title">🚀 컴퓨트 셰이더란?</h2>
+                
+                <p><strong>컴퓨트 셰이더(Compute Shader)</strong>는 GPU의 병렬 처리 능력을 활용하여 그래픽스 렌더링과 무관한 범용 계산을 수행하는 셰이더입니다. GPGPU(General-Purpose computing on Graphics Processing Units)의 핵심 기술입니다.</p>
+
+                <div class="highlight-box">
+                    <strong>🎯 컴퓨트 셰이더의 핵심 개념:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>병렬 처리:</strong> 수천 개의 스레드가 동시에 실행</li>
+                        <li><strong>범용 계산:</strong> 그래픽스 외의 다양한 계산 작업</li>
+                        <li><strong>메모리 공유:</strong> 스레드 그룹 내에서 데이터 공유</li>
+                        <li><strong>고성능:</strong> CPU 대비 월등한 병렬 처리 성능</li>
+                    </ul>
+                </div>
+
+                <div class="architecture-diagram">
+                    <h3 style="margin-bottom: 1.5rem; color: #333;">컴퓨트 셰이더 스레드 계층구조</h3>
+                    <div class="thread-hierarchy">
+                        <div class="thread-level thread">
+                            <strong>Thread</strong><br>
+                            <small>개별 실행 단위</small>
+                        </div>
+                        <div style="color: #667eea; font-size: 1.5rem;">→</div>
+                        <div class="thread-level group">
+                            <strong>Thread Group</strong><br>
+                            <small>스레드 묶음 (예: 8x8x1)</small>
+                        </div>
+                        <div style="color: #667eea; font-size: 1.5rem;">→</div>
+                        <div class="thread-level dispatch">
+                            <strong>Dispatch</strong><br>
+                            <small>전체 실행 영역</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">⚡ CPU vs GPU 병렬 처리</h2>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card cpu">
+                        <h4><i class="fas fa-microchip"></i> CPU 처리</h4>
+                        <p><strong>특징:</strong></p>
+                        <ul>
+                            <li>적은 수의 강력한 코어 (4-16개)</li>
+                            <li>복잡한 명령어 처리</li>
+                            <li>큰 캐시 메모리</li>
+                            <li>분기 예측 최적화</li>
+                            <li>순차적 처리에 최적화</li>
+                        </ul>
+                        <p><strong>적합한 작업:</strong></p>
+                        <ul>
+                            <li>복잡한 로직 처리</li>
+                            <li>분기가 많은 알고리즘</li>
+                            <li>메모리 접근 패턴이 불규칙한 작업</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="comparison-card gpu">
+                        <h4><i class="fas fa-server"></i> GPU 처리</h4>
+                        <p><strong>특징:</strong></p>
+                        <ul>
+                            <li>많은 수의 단순한 코어 (수천 개)</li>
+                            <li>단순한 명령어 처리</li>
+                            <li>작은 캐시, 큰 대역폭</li>
+                            <li>SIMD 아키텍처</li>
+                            <li>병렬 처리에 최적화</li>
+                        </ul>
+                        <p><strong>적합한 작업:</strong></p>
+                        <ul>
+                            <li>대량의 단순 계산</li>
+                            <li>행렬 연산</li>
+                            <li>이미지/신호 처리</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🏗️ 컴퓨트 셰이더 기본 구조</h2>
+                
+                <p>컴퓨트 셰이더는 일반적인 렌더링 셰이더와 다른 구조를 가지고 있습니다. 기본 템플릿을 살펴보겠습니다.</p>
+
+                <div class="code-example">
+<span class="comment">// BasicCompute.compute</span>
+<span class="keyword">#pragma kernel</span> CSMain
+
+<span class="comment">// 스레드 그룹 크기 정의 (8x8x1 = 64 스레드)</span>
+<span class="bracket">[</span><span class="function">numthreads</span>(<span class="number">8</span>, <span class="number">8</span>, <span class="number">1</span>)<span class="bracket">]</span>
+<span class="type">void</span> <span class="function">CSMain</span> (<span class="type">uint3</span> id : <span class="keyword">SV_DispatchThreadID</span>)
+<span class="bracket">{</span>
+    <span class="comment">// id.x, id.y, id.z는 현재 스레드의 3D 인덱스</span>
+    <span class="comment">// 여기에 계산 로직 작성</span>
+<span class="bracket">}</span>
+                </div>
+
+                <h3 class="subsection-title">핵심 구성 요소</h3>
+                
+                <div class="tip-box">
+                    <strong>💡 컴퓨트 셰이더 핵심 요소:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>#pragma kernel:</strong> 컴퓨트 셰이더 진입점 정의</li>
+                        <li><strong>[numthreads]:</strong> 스레드 그룹 크기 지정</li>
+                        <li><strong>SV_DispatchThreadID:</strong> 전역 스레드 ID</li>
+                        <li><strong>SV_GroupThreadID:</strong> 그룹 내 로컬 스레드 ID</li>
+                        <li><strong>SV_GroupID:</strong> 스레드 그룹 ID</li>
+                    </ul>
+                </div>
+
+                <h3 class="subsection-title">C# 스크립트에서 사용하기</h3>
+                
+                <div class="code-example">
+<span class="keyword">using</span> UnityEngine;
+
+<span class="keyword">public class</span> <span class="type">ComputeExample</span> : <span class="type">MonoBehaviour</span>
+<span class="bracket">{</span>
+    <span class="keyword">public</span> <span class="type">ComputeShader</span> computeShader;
+    <span class="keyword">public</span> <span class="type">RenderTexture</span> renderTexture;
+    
+    <span class="type">void</span> <span class="function">Start</span>()
+    <span class="bracket">{</span>
+        <span class="comment">// 렌더 텍스처 생성</span>
+        renderTexture = <span class="keyword">new</span> <span class="type">RenderTexture</span>(<span class="number">256</span>, <span class="number">256</span>, <span class="number">0</span>);
+        renderTexture.<span class="property">enableRandomWrite</span> = <span class="keyword">true</span>;
+        renderTexture.<span class="function">Create</span>();
+        
+        <span class="comment">// 컴퓨트 셰이더 실행</span>
+        <span class="function">RunComputeShader</span>();
+    <span class="bracket">}</span>
+    
+    <span class="type">void</span> <span class="function">RunComputeShader</span>()
+    <span class="bracket">{</span>
+        <span class="comment">// 커널 인덱스 가져오기</span>
+        <span class="type">int</span> kernelHandle = computeShader.<span class="function">FindKernel</span>(<span class="string">"CSMain"</span>);
+        
+        <span class="comment">// 텍스처 바인딩</span>
+        computeShader.<span class="function">SetTexture</span>(kernelHandle, <span class="string">"Result"</span>, renderTexture);
+        
+        <span class="comment">// 디스패치 (스레드 그룹 수 계산)</span>
+        <span class="type">int</span> threadGroups = <span class="function">Mathf.CeilToInt</span>(renderTexture.<span class="property">width</span> / <span class="number">8.0f</span>);
+        computeShader.<span class="function">Dispatch</span>(kernelHandle, threadGroups, threadGroups, <span class="number">1</span>);
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🎨 활용 사례</h2>
+                
+                <p>컴퓨트 셰이더는 다양한 분야에서 활용됩니다. 주요 사용 사례들을 살펴보겠습니다.</p>
+
+                <div class="use-cases">
+                    <div class="use-case-card physics">
+                        <div class="case-badge">Physics</div>
+                        <h4><i class="fas fa-atom"></i> 물리 시뮬레이션</h4>
+                        <p>파티클 시스템, 유체 시뮬레이션, 천체 물리학 등에서 대량의 물리 계산을 병렬로 처리합니다.</p>
+                        <p><strong>예시:</strong> 수천 개의 파티클 충돌 계산, N-body 시뮬레이션</p>
+                    </div>
+                    
+                    <div class="use-case-card graphics">
+                        <div class="case-badge">Graphics</div>
+                        <h4><i class="fas fa-image"></i> 이미지 처리</h4>
+                        <p>블러, 노이즈 생성, 텍스처 합성 등의 이미지 처리 작업을 고속으로 수행합니다.</p>
+                        <p><strong>예시:</strong> 실시간 블러 효과, 프로시저럴 텍스처 생성</p>
+                    </div>
+                    
+                    <div class="use-case-card ai">
+                        <div class="case-badge">AI</div>
+                        <h4><i class="fas fa-brain"></i> 머신러닝</h4>
+                        <p>신경망 학습과 추론에서 행렬 연산을 병렬로 처리하여 성능을 크게 향상시킵니다.</p>
+                        <p><strong>예시:</strong> 딥러닝 모델 추론, 유전 알고리즘</p>
+                    </div>
+                    
+                    <div class="use-case-card simulation">
+                        <div class="case-badge">Simulation</div>
+                        <h4><i class="fas fa-globe"></i> 시뮬레이션</h4>
+                        <p>날씨, 군중, 생태계 등의 복잡한 시스템을 실시간으로 시뮬레이션합니다.</p>
+                        <p><strong>예시:</strong> 군중 AI, 생태계 시뮬레이션, 셀룰러 오토마타</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🔧 실습: 이미지 블러 효과</h2>
+                
+                <p>컴퓨트 셰이더를 사용하여 실시간 이미지 블러 효과를 구현해보겠습니다.</p>
+
+                <h3 class="subsection-title">컴퓨트 셰이더 코드</h3>
+                
+                <div class="code-example">
+<span class="comment">// ImageBlur.compute</span>
+<span class="keyword">#pragma kernel</span> CSMain
+
+<span class="comment">// 입력과 출력 텍스처</span>
+<span class="type">Texture2D</span>&lt;<span class="type">float4</span>&gt; <span class="property">InputTexture</span>;
+<span class="type">RWTexture2D</span>&lt;<span class="type">float4</span>&gt; <span class="property">Result</span>;
+
+<span class="comment">// 블러 강도</span>
+<span class="type">float</span> <span class="property">BlurRadius</span>;
+<span class="type">int</span> <span class="property">TextureSize</span>;
+
+<span class="comment">// 8x8 스레드 그룹</span>
+<span class="bracket">[</span><span class="function">numthreads</span>(<span class="number">8</span>, <span class="number">8</span>, <span class="number">1</span>)<span class="bracket">]</span>
+<span class="type">void</span> <span class="function">CSMain</span> (<span class="type">uint3</span> id : <span class="keyword">SV_DispatchThreadID</span>)
+<span class="bracket">{</span>
+    <span class="comment">// 텍스처 범위 체크</span>
+    <span class="keyword">if</span> (id.<span class="property">x</span> >= TextureSize || id.<span class="property">y</span> >= TextureSize)
+        <span class="keyword">return</span>;
+    
+    <span class="type">float4</span> color = <span class="type">float4</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
+    <span class="type">float</span> totalWeight = <span class="number">0</span>;
+    
+    <span class="comment">// 가우시안 블러 구현</span>
+    <span class="type">int</span> radius = (<span class="type">int</span>)BlurRadius;
+    <span class="keyword">for</span> (<span class="type">int</span> x = -radius; x <= radius; x++)
+    <span class="bracket">{</span>
+        <span class="keyword">for</span> (<span class="type">int</span> y = -radius; y <= radius; y++)
+        <span class="bracket">{</span>
+            <span class="type">int2</span> samplePos = <span class="type">int2</span>(id.<span class="property">x</span> + x, id.<span class="property">y</span> + y);
+            
+            <span class="comment">// 경계 처리</span>
+            samplePos = <span class="function">clamp</span>(samplePos, <span class="type">int2</span>(<span class="number">0</span>, <span class="number">0</span>), <span class="type">int2</span>(TextureSize - <span class="number">1</span>, TextureSize - <span class="number">1</span>));
+            
+            <span class="comment">// 가우시안 가중치 계산</span>
+            <span class="type">float</span> distance = <span class="function">length</span>(<span class="type">float2</span>(x, y));
+            <span class="type">float</span> weight = <span class="function">exp</span>(-distance * distance / (<span class="number">2.0</span> * BlurRadius * BlurRadius));
+            
+            color += InputTexture[samplePos] * weight;
+            totalWeight += weight;
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+    
+    <span class="comment">// 정규화하여 결과 저장</span>
+    Result[id.<span class="property">xy</span>] = color / totalWeight;
+<span class="bracket">}</span>
+                </div>
+
+                <h3 class="subsection-title">C# 제어 스크립트</h3>
+                
+                <div class="code-example">
+<span class="keyword">using</span> UnityEngine;
+<span class="keyword">using</span> UnityEngine.UI;
+
+<span class="keyword">public class</span> <span class="type">ImageBlurEffect</span> : <span class="type">MonoBehaviour</span>
+<span class="bracket">{</span>
+    <span class="bracket">[</span><span class="type">Header</span>(<span class="string">"Compute Shader"</span>)<span class="bracket">]</span>
+    <span class="keyword">public</span> <span class="type">ComputeShader</span> blurComputeShader;
+    
+    <span class="bracket">[</span><span class="type">Header</span>(<span class="string">"Settings"</span>)<span class="bracket">]</span>
+    <span class="keyword">public</span> <span class="type">Texture2D</span> inputTexture;
+    <span class="keyword">public</span> <span class="type">RawImage</span> outputImage;
+    <span class="bracket">[</span><span class="type">Range</span>(<span class="number">0.1f</span>, <span class="number">10f</span>)<span class="bracket">]</span>
+    <span class="keyword">public</span> <span class="type">float</span> blurRadius = <span class="number">2f</span>;
+    
+    <span class="keyword">private</span> <span class="type">RenderTexture</span> resultTexture;
+    <span class="keyword">private</span> <span class="type">int</span> kernelHandle;
+    
+    <span class="type">void</span> <span class="function">Start</span>()
+    <span class="bracket">{</span>
+        <span class="function">InitializeComputeShader</span>();
+    <span class="bracket">}</span>
+    
+    <span class="type">void</span> <span class="function">InitializeComputeShader</span>()
+    <span class="bracket">{</span>
+        <span class="comment">// 커널 핸들 가져오기</span>
+        kernelHandle = blurComputeShader.<span class="function">FindKernel</span>(<span class="string">"CSMain"</span>);
+        
+        <span class="comment">// 결과 텍스처 생성</span>
+        resultTexture = <span class="keyword">new</span> <span class="type">RenderTexture</span>(inputTexture.<span class="property">width</span>, inputTexture.<span class="property">height</span>, <span class="number">0</span>);
+        resultTexture.<span class="property">enableRandomWrite</span> = <span class="keyword">true</span>;
+        resultTexture.<span class="property">format</span> = <span class="type">RenderTextureFormat</span>.<span class="property">ARGB32</span>;
+        resultTexture.<span class="function">Create</span>();
+        
+        <span class="comment">// UI에 결과 텍스처 연결</span>
+        outputImage.<span class="property">texture</span> = resultTexture;
+        
+        <span class="comment">// 초기 블러 적용</span>
+        <span class="function">ApplyBlur</span>();
+    <span class="bracket">}</span>
+    
+    <span class="type">void</span> <span class="function">Update</span>()
+    <span class="bracket">{</span>
+        <span class="comment">// 실시간으로 블러 업데이트</span>
+        <span class="function">ApplyBlur</span>();
+    <span class="bracket">}</span>
+    
+    <span class="type">void</span> <span class="function">ApplyBlur</span>()
+    <span class="bracket">{</span>
+        <span class="comment">// 컴퓨트 셰이더 파라미터 설정</span>
+        blurComputeShader.<span class="function">SetTexture</span>(kernelHandle, <span class="string">"InputTexture"</span>, inputTexture);
+        blurComputeShader.<span class="function">SetTexture</span>(kernelHandle, <span class="string">"Result"</span>, resultTexture);
+        blurComputeShader.<span class="function">SetFloat</span>(<span class="string">"BlurRadius"</span>, blurRadius);
+        blurComputeShader.<span class="function">SetInt</span>(<span class="string">"TextureSize"</span>, inputTexture.<span class="property">width</span>);
+        
+        <span class="comment">// 스레드 그룹 수 계산 (8x8 그룹 크기)</span>
+        <span class="type">int</span> threadGroupsX = <span class="function">Mathf.CeilToInt</span>(inputTexture.<span class="property">width</span> / <span class="number">8.0f</span>);
+        <span class="type">int</span> threadGroupsY = <span class="function">Mathf.CeilToInt</span>(inputTexture.<span class="property">height</span> / <span class="number">8.0f</span>);
+        
+        <span class="comment">// 컴퓨트 셰이더 실행</span>
+        blurComputeShader.<span class="function">Dispatch</span>(kernelHandle, threadGroupsX, threadGroupsY, <span class="number">1</span>);
+    <span class="bracket">}</span>
+    
+    <span class="type">void</span> <span class="function">OnDestroy</span>()
+    <span class="bracket">{</span>
+        <span class="keyword">if</span> (resultTexture != <span class="keyword">null</span>)
+        <span class="bracket">{</span>
+            resultTexture.<span class="function">Release</span>();
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 이 예제의 특징:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>실시간 처리:</strong> 매 프레임 블러 효과 업데이트</li>
+                        <li><strong>가우시안 블러:</strong> 자연스러운 블러 효과</li>
+                        <li><strong>경계 처리:</strong> 텍스처 경계에서의 안전한 샘플링</li>
+                        <li><strong>파라미터 제어:</strong> 실시간으로 블러 강도 조절</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">⚡ 성능 최적화</h2>
+                
+                <p>컴퓨트 셰이더의 성능을 최대화하기 위한 최적화 기법들을 알아보겠습니다.</p>
+
+                <h3 class="subsection-title">스레드 그룹 크기 최적화</h3>
+                
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>그룹 크기</th>
+                            <th>총 스레드</th>
+                            <th>장점</th>
+                            <th>단점</th>
+                            <th>적합한 용도</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>8x8x1</strong></td>
+                            <td>64</td>
+                            <td>균형잡힌 성능</td>
+                            <td>-</td>
+                            <td>일반적인 2D 작업</td>
+                        </tr>
+                        <tr>
+                            <td><strong>16x16x1</strong></td>
+                            <td>256</td>
+                            <td>높은 병렬성</td>
+                            <td>메모리 사용량 증가</td>
+                            <td>대용량 이미지 처리</td>
+                        </tr>
+                        <tr>
+                            <td><strong>64x1x1</strong></td>
+                            <td>64</td>
+                            <td>1D 작업에 최적</td>
+                            <td>2D 작업에 비효율</td>
+                            <td>배열 처리, 정렬</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4x4x4</strong></td>
+                            <td>64</td>
+                            <td>3D 작업에 적합</td>
+                            <td>복잡한 인덱싱</td>
+                            <td>볼륨 렌더링, 3D 시뮬레이션</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">메모리 접근 최적화</h3>
+                
+                <div class="code-example">
+<span class="comment">// 비효율적인 메모리 접근</span>
+<span class="bracket">[</span><span class="function">numthreads</span>(<span class="number">8</span>, <span class="number">8</span>, <span class="number">1</span>)<span class="bracket">]</span>
+<span class="type">void</span> <span class="function">BadMemoryAccess</span>(<span class="type">uint3</span> id : <span class="keyword">SV_DispatchThreadID</span>)
+<span class="bracket">{</span>
+    <span class="comment">// 무작위 메모리 접근 - 캐시 미스 발생</span>
+    <span class="type">int</span> randomIndex = <span class="function">hash</span>(id.<span class="property">x</span> + id.<span class="property">y</span> * <span class="number">1000</span>) % <span class="number">1000000</span>;
+    <span class="type">float</span> value = InputBuffer[randomIndex];
+<span class="bracket">}</span>
+
+<span class="comment">// 효율적인 메모리 접근</span>
+<span class="bracket">[</span><span class="function">numthreads</span>(<span class="number">8</span>, <span class="number">8</span>, <span class="number">1</span>)<span class="bracket">]</span>
+<span class="type">void</span> <span class="function">GoodMemoryAccess</span>(<span class="type">uint3</span> id : <span class="keyword">SV_DispatchThreadID</span>)
+<span class="bracket">{</span>
+    <span class="comment">// 순차적 메모리 접근 - 캐시 효율성 극대화</span>
+    <span class="type">int</span> index = id.<span class="property">x</span> + id.<span class="property">y</span> * TextureWidth;
+    <span class="type">float</span> value = InputBuffer[index];
+<span class="bracket">}</span>
+                </div>
+
+                <h3 class="subsection-title">공유 메모리 활용</h3>
+                
+                <div class="code-example">
+<span class="comment">// 공유 메모리를 활용한 최적화</span>
+<span class="keyword">groupshared</span> <span class="type">float4</span> sharedData[<span class="number">8</span> * <span class="number">8</span>];
+
+<span class="bracket">[</span><span class="function">numthreads</span>(<span class="number">8</span>, <span class="number">8</span>, <span class="number">1</span>)<span class="bracket">]</span>
+<span class="type">void</span> <span class="function">SharedMemoryExample</span>(<span class="type">uint3</span> id : <span class="keyword">SV_DispatchThreadID</span>,
+                           <span class="type">uint3</span> groupId : <span class="keyword">SV_GroupID</span>,
+                           <span class="type">uint3</span> localId : <span class="keyword">SV_GroupThreadID</span>)
+<span class="bracket">{</span>
+    <span class="comment">// 로컬 인덱스 계산</span>
+    <span class="type">uint</span> localIndex = localId.<span class="property">x</span> + localId.<span class="property">y</span> * <span class="number">8</span>;
+    
+    <span class="comment">// 공유 메모리에 데이터 로드</span>
+    sharedData[localIndex] = InputTexture[id.<span class="property">xy</span>];
+    
+    <span class="comment">// 모든 스레드가 로드 완료될 때까지 대기</span>
+    <span class="function">GroupMemoryBarrierWithGroupSync</span>();
+    
+    <span class="comment">// 공유 메모리에서 데이터 처리</span>
+    <span class="type">float4</span> result = <span class="type">float4</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i < <span class="number">64</span>; i++)
+    <span class="bracket">{</span>
+        result += sharedData[i];
+    <span class="bracket">}</span>
+    
+    Result[id.<span class="property">xy</span>] = result / <span class="number">64.0</span>;
+<span class="bracket">}</span>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ 성능 최적화 주의사항:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>분기 최소화:</strong> if문이 많으면 성능 저하</li>
+                        <li><strong>메모리 대역폭:</strong> 과도한 메모리 접근 피하기</li>
+                        <li><strong>동기화 비용:</strong> GroupMemoryBarrier 사용 최소화</li>
+                        <li><strong>스레드 발산:</strong> 같은 워프 내 스레드들이 다른 경로 실행 피하기</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="surface-shaders.html" class="nav-button prev">
+                    <i class="fas fa-chevron-left"></i>
+                    이전: 서피스 셰이더
+                </a>
+                <a href="post-processing.html" class="nav-button">
+                    다음: 포스트 프로세싱
+                    <i class="fas fa-chevron-right"></i>
+                </a>
             </div>
         </div>
     </main>

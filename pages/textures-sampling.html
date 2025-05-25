@@ -14,9 +14,10 @@
             padding-top: 100px;
         }
         .content-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 2rem;
+            line-height: 1.7;
         }
         .page-header {
             text-align: center;
@@ -29,14 +30,6 @@
         }
         .page-subtitle {
             font-size: 1.2rem;
-            color: #666;
-        }
-        .content-placeholder {
-            background: #f8fafc;
-            border: 2px dashed #cbd5e0;
-            border-radius: 10px;
-            padding: 3rem;
-            text-align: center;
             color: #666;
         }
         .back-button {
@@ -55,6 +48,271 @@
         .back-button:hover {
             background: #5a67d8;
             transform: translateY(-2px);
+        }
+        .content-section {
+            margin: 2rem 0;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        .subsection-title {
+            font-size: 1.4rem;
+            color: #667eea;
+            margin: 2rem 0 1rem 0;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .texture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .texture-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .texture-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .texture-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .texture-card .type-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .texture-card.diffuse .type-badge {
+            background: #10b981;
+        }
+        .texture-card.normal .type-badge {
+            background: #3b82f6;
+        }
+        .texture-card.specular .type-badge {
+            background: #f59e0b;
+        }
+        .texture-card.height .type-badge {
+            background: #8b5cf6;
+        }
+        .code-example {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            border: 1px solid #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .code-example .keyword {
+            color: #569cd6;
+            font-weight: 500;
+        }
+        .code-example .string {
+            color: #ce9178;
+        }
+        .code-example .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        .code-example .type {
+            color: #4ec9b0;
+        }
+        .code-example .number {
+            color: #b5cea8;
+        }
+        .code-example .property {
+            color: #9cdcfe;
+        }
+        .code-example .bracket {
+            color: #ffd700;
+        }
+        .code-example .function {
+            color: #dcdcaa;
+        }
+        .uv-diagram {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px solid #cbd5e0;
+        }
+        .uv-grid {
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            background: 
+                linear-gradient(to right, #667eea 1px, transparent 1px),
+                linear-gradient(to bottom, #667eea 1px, transparent 1px);
+            background-size: 40px 40px;
+            border: 2px solid #667eea;
+            position: relative;
+            margin: 1rem;
+        }
+        .uv-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .uv-point.bottom-left {
+            bottom: 0;
+            left: 0;
+        }
+        .uv-point.bottom-right {
+            bottom: 0;
+            right: 0;
+        }
+        .uv-point.top-left {
+            top: 0;
+            left: 0;
+        }
+        .uv-point.top-right {
+            top: 0;
+            right: 0;
+        }
+        .tip-box {
+            background: linear-gradient(135deg, #10b98120, #059f4620);
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box {
+            background: linear-gradient(135deg, #fbbf2420, #f5935420);
+            border-left: 4px solid #f59354;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .sampling-demo {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px solid #cbd5e0;
+        }
+        .filter-comparison {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .filter-demo {
+            text-align: center;
+        }
+        .filter-sample {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #667eea;
+            margin: 0.5rem auto;
+            position: relative;
+        }
+        .filter-sample.point {
+            background: 
+                repeating-linear-gradient(0deg, #667eea, #667eea 10px, white 10px, white 20px),
+                repeating-linear-gradient(90deg, #667eea, #667eea 10px, white 10px, white 20px);
+            background-size: 20px 20px;
+        }
+        .filter-sample.bilinear {
+            background: 
+                repeating-linear-gradient(0deg, #667eea, #667eea 8px, white 8px, white 16px),
+                repeating-linear-gradient(90deg, #667eea, #667eea 8px, white 8px, white 16px);
+            background-size: 16px 16px;
+            filter: blur(0.5px);
+        }
+        .filter-sample.trilinear {
+            background: 
+                repeating-linear-gradient(0deg, #667eea, #667eea 6px, white 6px, white 12px),
+                repeating-linear-gradient(90deg, #667eea, #667eea 6px, white 6px, white 12px);
+            background-size: 12px 12px;
+            filter: blur(1px);
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+        .comparison-table tr:hover {
+            background: #f8fafc;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            justify-content: center;
+        }
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        .nav-button.prev {
+            background: linear-gradient(135deg, #6b7280, #9ca3af);
+        }
+        .nav-button.prev:hover {
+            box-shadow: 0 8px 25px rgba(107, 114, 128, 0.3);
         }
     </style>
 </head>
@@ -95,14 +353,454 @@
             
             <div class="page-header">
                 <h1 class="page-title">텍스처와 샘플링</h1>
-                <p class="page-subtitle">텍스처 매핑과 다양한 샘플링 기법</p>
+                <p class="page-subtitle">텍스처 매핑과 샘플링 기법 마스터하기</p>
             </div>
 
-            <div class="content-placeholder">
-                <i class="fas fa-image" style="font-size: 3rem; margin-bottom: 1rem; color: #667eea;"></i>
-                <h3>콘텐츠 준비 중</h3>
-                <p>이 페이지의 내용은 곧 추가될 예정입니다.</p>
-                <p>텍스처 매핑, UV 좌표, 다양한 샘플링 방법, 밉맵, 필터링 기법 등을 다룰 예정입니다.</p>
+            <div class="content-section">
+                <h2 class="section-title">🖼️ 텍스처란?</h2>
+                
+                <p><strong>텍스처(Texture)</strong>는 3D 모델의 표면에 세부 정보를 추가하는 2D 이미지입니다. 텍스처를 통해 색상, 거칠기, 법선 정보 등을 표현하여 현실적인 렌더링을 구현할 수 있습니다.</p>
+
+                <div class="highlight-box">
+                    <strong>🎯 텍스처의 역할:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>시각적 디테일:</strong> 적은 폴리곤으로도 복잡한 표면 표현</li>
+                        <li><strong>성능 최적화:</strong> 지오메트리 대신 이미지로 디테일 구현</li>
+                        <li><strong>재질 정보:</strong> 다양한 물리적 속성을 이미지로 저장</li>
+                        <li><strong>아티스틱 표현:</strong> 원하는 스타일과 분위기 연출</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🎨 텍스처 타입</h2>
+                
+                <div class="texture-grid">
+                    <div class="texture-card diffuse">
+                        <div class="type-badge">Diffuse</div>
+                        <h4><i class="fas fa-palette"></i> 디퓨즈 맵</h4>
+                        <p>기본 색상 정보를 담고 있는 텍스처입니다. 가장 기본적이고 필수적인 텍스처 타입입니다.</p>
+                        <p><strong>용도:</strong> 기본 색상, 패턴, 로고 등</p>
+                    </div>
+                    
+                    <div class="texture-card normal">
+                        <div class="type-badge">Normal</div>
+                        <h4><i class="fas fa-mountain"></i> 노멀 맵</h4>
+                        <p>표면의 법선 벡터 정보를 RGB로 인코딩한 텍스처입니다. 실제 지오메트리 없이도 입체감을 표현합니다.</p>
+                        <p><strong>용도:</strong> 범프, 주름, 돌출 효과</p>
+                    </div>
+                    
+                    <div class="texture-card specular">
+                        <div class="type-badge">Specular</div>
+                        <h4><i class="fas fa-gem"></i> 스페큘러 맵</h4>
+                        <p>표면의 반사도를 제어하는 텍스처입니다. 밝은 부분은 더 반사적이고, 어두운 부분은 덜 반사적입니다.</p>
+                        <p><strong>용도:</strong> 금속성, 광택도 조절</p>
+                    </div>
+                    
+                    <div class="texture-card height">
+                        <div class="type-badge">Height</div>
+                        <h4><i class="fas fa-layer-group"></i> 하이트 맵</h4>
+                        <p>표면의 높이 정보를 그레이스케일로 표현한 텍스처입니다. 패럴랙스 매핑이나 디스플레이스먼트에 사용됩니다.</p>
+                        <p><strong>용도:</strong> 깊이감, 패럴랙스 효과</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">📐 UV 좌표 시스템</h2>
+                
+                <p><strong>UV 좌표</strong>는 3D 모델의 표면을 2D 텍스처에 매핑하는 좌표 시스템입니다. U는 가로축(X), V는 세로축(Y)을 나타내며, 일반적으로 0~1 범위를 사용합니다.</p>
+
+                <div class="uv-diagram">
+                    <h3 style="margin-bottom: 1.5rem; color: #333;">UV 좌표 시스템</h3>
+                    <div class="uv-grid">
+                        <div class="uv-point bottom-left" title="(0,0)"></div>
+                        <div class="uv-point bottom-right" title="(1,0)"></div>
+                        <div class="uv-point top-left" title="(0,1)"></div>
+                        <div class="uv-point top-right" title="(1,1)"></div>
+                    </div>
+                    <p style="margin-top: 1rem; color: #666;">
+                        <strong>좌하단:</strong> (0,0) | <strong>우하단:</strong> (1,0)<br>
+                        <strong>좌상단:</strong> (0,1) | <strong>우상단:</strong> (1,1)
+                    </p>
+                </div>
+
+                <h3 class="subsection-title">UV 좌표 변환</h3>
+                
+                <div class="code-example">
+<span class="comment">// UV 좌표 기본 사용법</span>
+<span class="keyword">struct</span> <span class="type">appdata</span>
+<span class="bracket">{</span>
+    <span class="type">float4</span> <span class="property">vertex</span> : <span class="keyword">POSITION</span>;
+    <span class="type">float2</span> <span class="property">uv</span> : <span class="keyword">TEXCOORD0</span>;        <span class="comment">// UV 좌표 입력</span>
+<span class="bracket">}</span>;
+
+<span class="keyword">struct</span> <span class="type">v2f</span>
+<span class="bracket">{</span>
+    <span class="type">float4</span> <span class="property">pos</span> : <span class="keyword">SV_POSITION</span>;
+    <span class="type">float2</span> <span class="property">uv</span> : <span class="keyword">TEXCOORD0</span>;        <span class="comment">// UV 좌표 출력</span>
+<span class="bracket">}</span>;
+
+<span class="keyword">sampler2D</span> <span class="property">_MainTex</span>;
+<span class="type">float4</span> <span class="property">_MainTex_ST</span>;                    <span class="comment">// Scale과 Offset 정보</span>
+
+<span class="type">v2f</span> <span class="function">vert</span>(<span class="type">appdata</span> v)
+<span class="bracket">{</span>
+    <span class="type">v2f</span> o;
+    o.<span class="property">pos</span> = <span class="function">UnityObjectToClipPos</span>(v.<span class="property">vertex</span>);
+    
+    <span class="comment">// UV 좌표 변환 (스케일과 오프셋 적용)</span>
+    o.<span class="property">uv</span> = <span class="function">TRANSFORM_TEX</span>(v.<span class="property">uv</span>, <span class="property">_MainTex</span>);
+    <span class="comment">// 위 코드는 다음과 같음: v.uv * _MainTex_ST.xy + _MainTex_ST.zw</span>
+    
+    <span class="keyword">return</span> o;
+<span class="bracket">}</span>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 UV 좌표 팁:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>TRANSFORM_TEX:</strong> Unity의 내장 매크로로 스케일과 오프셋을 자동 적용</li>
+                        <li><strong>_MainTex_ST:</strong> x,y는 스케일, z,w는 오프셋 값</li>
+                        <li><strong>범위 초과:</strong> UV가 0~1을 벗어나면 Wrap Mode에 따라 처리</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🔍 텍스처 샘플링</h2>
+                
+                <p><strong>텍스처 샘플링</strong>은 UV 좌표를 사용하여 텍스처에서 색상 값을 가져오는 과정입니다. 다양한 샘플링 함수와 필터링 방법이 있습니다.</p>
+
+                <h3 class="subsection-title">기본 샘플링 함수</h3>
+                
+                <div class="code-example">
+<span class="comment">// 기본 텍스처 샘플링</span>
+<span class="type">fixed4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+<span class="bracket">{</span>
+    <span class="comment">// tex2D: 가장 기본적인 2D 텍스처 샘플링</span>
+    <span class="type">fixed4</span> color = <span class="function">tex2D</span>(<span class="property">_MainTex</span>, i.<span class="property">uv</span>);
+    
+    <span class="comment">// tex2Dlod: LOD(Level of Detail) 레벨 지정 샘플링</span>
+    <span class="type">fixed4</span> colorLod = <span class="function">tex2Dlod</span>(<span class="property">_MainTex</span>, <span class="type">float4</span>(i.<span class="property">uv</span>, <span class="number">0</span>, <span class="number">2</span>)); <span class="comment">// LOD 2</span>
+    
+    <span class="comment">// tex2Dgrad: 그라디언트 기반 샘플링</span>
+    <span class="type">float2</span> dx = <span class="function">ddx</span>(i.<span class="property">uv</span>);
+    <span class="type">float2</span> dy = <span class="function">ddy</span>(i.<span class="property">uv</span>);
+    <span class="type">fixed4</span> colorGrad = <span class="function">tex2Dgrad</span>(<span class="property">_MainTex</span>, i.<span class="property">uv</span>, dx, dy);
+    
+    <span class="keyword">return</span> color;
+<span class="bracket">}</span>
+                </div>
+
+                <h3 class="subsection-title">필터링 방법</h3>
+                
+                <div class="sampling-demo">
+                    <h4 style="margin-bottom: 1.5rem; color: #333;">텍스처 필터링 비교</h4>
+                    <div class="filter-comparison">
+                        <div class="filter-demo">
+                            <div class="filter-sample point"></div>
+                            <div><strong>Point</strong></div>
+                            <small>픽셀 단위, 날카로움</small>
+                        </div>
+                        <div class="filter-demo">
+                            <div class="filter-sample bilinear"></div>
+                            <div><strong>Bilinear</strong></div>
+                            <small>선형 보간, 부드러움</small>
+                        </div>
+                        <div class="filter-demo">
+                            <div class="filter-sample trilinear"></div>
+                            <div><strong>Trilinear</strong></div>
+                            <small>밉맵 포함, 최고 품질</small>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>필터링 방법</th>
+                            <th>특징</th>
+                            <th>성능</th>
+                            <th>품질</th>
+                            <th>사용 용도</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Point</strong></td>
+                            <td>가장 가까운 픽셀 사용</td>
+                            <td>매우 빠름</td>
+                            <td>낮음</td>
+                            <td>픽셀 아트, UI</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bilinear</strong></td>
+                            <td>4개 픽셀 선형 보간</td>
+                            <td>빠름</td>
+                            <td>중간</td>
+                            <td>일반적인 텍스처</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trilinear</strong></td>
+                            <td>밉맵 레벨 간 보간</td>
+                            <td>보통</td>
+                            <td>높음</td>
+                            <td>고품질 렌더링</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🔄 UV 조작 기법</h2>
+                
+                <p>UV 좌표를 조작하여 다양한 시각적 효과를 만들 수 있습니다. 스크롤링, 회전, 스케일링 등의 기법을 알아보겠습니다.</p>
+
+                <h3 class="subsection-title">UV 스크롤링</h3>
+                
+                <div class="code-example">
+<span class="keyword">Shader</span> <span class="string">"Custom/ScrollingTexture"</span>
+<span class="bracket">{</span>
+    <span class="keyword">Properties</span>
+    <span class="bracket">{</span>
+        <span class="property">_MainTex</span> (<span class="string">"Texture"</span>, <span class="keyword">2D</span>) = <span class="string">"white"</span> <span class="bracket">{}</span>
+        <span class="property">_ScrollSpeed</span> (<span class="string">"Scroll Speed"</span>, <span class="keyword">Vector</span>) = (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)
+    <span class="bracket">}</span>
+    
+    <span class="keyword">SubShader</span>
+    <span class="bracket">{</span>
+        <span class="keyword">Tags</span> <span class="bracket">{</span> <span class="string">"RenderType"</span>=<span class="string">"Opaque"</span> <span class="bracket">}</span>
+        
+        <span class="keyword">Pass</span>
+        <span class="bracket">{</span>
+            <span class="keyword">CGPROGRAM</span>
+            <span class="keyword">#pragma vertex</span> vert
+            <span class="keyword">#pragma fragment</span> frag
+            <span class="keyword">#include</span> <span class="string">"UnityCG.cginc"</span>
+            
+            <span class="keyword">struct</span> <span class="type">appdata</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> <span class="property">vertex</span> : <span class="keyword">POSITION</span>;
+                <span class="type">float2</span> <span class="property">uv</span> : <span class="keyword">TEXCOORD0</span>;
+            <span class="bracket">}</span>;
+            
+            <span class="keyword">struct</span> <span class="type">v2f</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> <span class="property">pos</span> : <span class="keyword">SV_POSITION</span>;
+                <span class="type">float2</span> <span class="property">uv</span> : <span class="keyword">TEXCOORD0</span>;
+            <span class="bracket">}</span>;
+            
+            <span class="keyword">sampler2D</span> <span class="property">_MainTex</span>;
+            <span class="type">float4</span> <span class="property">_MainTex_ST</span>;
+            <span class="type">float2</span> <span class="property">_ScrollSpeed</span>;
+            
+            <span class="type">v2f</span> <span class="function">vert</span>(<span class="type">appdata</span> v)
+            <span class="bracket">{</span>
+                <span class="type">v2f</span> o;
+                o.<span class="property">pos</span> = <span class="function">UnityObjectToClipPos</span>(v.<span class="property">vertex</span>);
+                
+                <span class="comment">// 시간에 따른 UV 스크롤링</span>
+                <span class="type">float2</span> scrollOffset = <span class="property">_ScrollSpeed</span> * <span class="property">_Time</span>.<span class="property">y</span>;
+                o.<span class="property">uv</span> = <span class="function">TRANSFORM_TEX</span>(v.<span class="property">uv</span>, <span class="property">_MainTex</span>) + scrollOffset;
+                
+                <span class="keyword">return</span> o;
+            <span class="bracket">}</span>
+            
+            <span class="type">fixed4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+            <span class="bracket">{</span>
+                <span class="keyword">return</span> <span class="function">tex2D</span>(<span class="property">_MainTex</span>, i.<span class="property">uv</span>);
+            <span class="bracket">}</span>
+            
+            <span class="keyword">ENDCG</span>
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+
+                <h3 class="subsection-title">UV 회전</h3>
+                
+                <div class="code-example">
+<span class="comment">// UV 회전 함수</span>
+<span class="type">float2</span> <span class="function">RotateUV</span>(<span class="type">float2</span> uv, <span class="type">float</span> angle, <span class="type">float2</span> center)
+<span class="bracket">{</span>
+    <span class="comment">// 중심점을 원점으로 이동</span>
+    uv -= center;
+    
+    <span class="comment">// 회전 행렬 적용</span>
+    <span class="type">float</span> cosAngle = <span class="function">cos</span>(angle);
+    <span class="type">float</span> sinAngle = <span class="function">sin</span>(angle);
+    
+    <span class="type">float2</span> rotatedUV;
+    rotatedUV.<span class="property">x</span> = uv.<span class="property">x</span> * cosAngle - uv.<span class="property">y</span> * sinAngle;
+    rotatedUV.<span class="property">y</span> = uv.<span class="property">x</span> * sinAngle + uv.<span class="property">y</span> * cosAngle;
+    
+    <span class="comment">// 중심점 복원</span>
+    <span class="keyword">return</span> rotatedUV + center;
+<span class="bracket">}</span>
+
+<span class="comment">// 프래그먼트 셰이더에서 사용</span>
+<span class="type">fixed4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+<span class="bracket">{</span>
+    <span class="comment">// 시간에 따라 회전하는 UV</span>
+    <span class="type">float</span> rotationAngle = <span class="property">_Time</span>.<span class="property">y</span> * <span class="property">_RotationSpeed</span>;
+    <span class="type">float2</span> rotatedUV = <span class="function">RotateUV</span>(i.<span class="property">uv</span>, rotationAngle, <span class="type">float2</span>(<span class="number">0.5</span>, <span class="number">0.5</span>));
+    
+    <span class="keyword">return</span> <span class="function">tex2D</span>(<span class="property">_MainTex</span>, rotatedUV);
+<span class="bracket">}</span>
+                </div>
+
+                <h3 class="subsection-title">멀티 텍스처 블렌딩</h3>
+                
+                <div class="code-example">
+<span class="comment">// 멀티 텍스처 블렌딩 예제</span>
+<span class="keyword">sampler2D</span> <span class="property">_MainTex</span>;
+<span class="keyword">sampler2D</span> <span class="property">_SecondTex</span>;
+<span class="keyword">sampler2D</span> <span class="property">_BlendMask</span>;
+<span class="type">float</span> <span class="property">_BlendStrength</span>;
+
+<span class="type">fixed4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+<span class="bracket">{</span>
+    <span class="comment">// 각 텍스처 샘플링</span>
+    <span class="type">fixed4</span> baseColor = <span class="function">tex2D</span>(<span class="property">_MainTex</span>, i.<span class="property">uv</span>);
+    <span class="type">fixed4</span> secondColor = <span class="function">tex2D</span>(<span class="property">_SecondTex</span>, i.<span class="property">uv</span>);
+    <span class="type">fixed4</span> blendMask = <span class="function">tex2D</span>(<span class="property">_BlendMask</span>, i.<span class="property">uv</span>);
+    
+    <span class="comment">// 마스크를 사용한 블렌딩</span>
+    <span class="type">float</span> blendFactor = blendMask.<span class="property">r</span> * <span class="property">_BlendStrength</span>;
+    <span class="type">fixed4</span> finalColor = <span class="function">lerp</span>(baseColor, secondColor, blendFactor);
+    
+    <span class="keyword">return</span> finalColor;
+<span class="bracket">}</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🛠️ 실습: 애니메이션 텍스처 셰이더</h2>
+                
+                <p>여러 텍스처 기법을 조합한 애니메이션 효과 셰이더를 만들어보겠습니다.</p>
+
+                <div class="code-example">
+<span class="keyword">Shader</span> <span class="string">"Custom/AnimatedTexture"</span>
+<span class="bracket">{</span>
+    <span class="keyword">Properties</span>
+    <span class="bracket">{</span>
+        <span class="property">_MainTex</span> (<span class="string">"Main Texture"</span>, <span class="keyword">2D</span>) = <span class="string">"white"</span> <span class="bracket">{}</span>
+        <span class="property">_NoiseTex</span> (<span class="string">"Noise Texture"</span>, <span class="keyword">2D</span>) = <span class="string">"white"</span> <span class="bracket">{}</span>
+        <span class="property">_Color</span> (<span class="string">"Color"</span>, <span class="keyword">Color</span>) = (<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>)
+        <span class="property">_ScrollSpeed</span> (<span class="string">"Scroll Speed"</span>, <span class="keyword">Vector</span>) = (<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)
+        <span class="property">_NoiseScale</span> (<span class="string">"Noise Scale"</span>, <span class="keyword">Float</span>) = <span class="number">1</span>
+        <span class="property">_NoiseStrength</span> (<span class="string">"Noise Strength"</span>, <span class="keyword">Range</span>(<span class="number">0</span>, <span class="number">1</span>)) = <span class="number">0.1</span>
+        <span class="property">_PulseSpeed</span> (<span class="string">"Pulse Speed"</span>, <span class="keyword">Float</span>) = <span class="number">2</span>
+    <span class="bracket">}</span>
+    
+    <span class="keyword">SubShader</span>
+    <span class="bracket">{</span>
+        <span class="keyword">Tags</span> <span class="bracket">{</span> <span class="string">"RenderType"</span>=<span class="string">"Transparent"</span> <span class="string">"Queue"</span>=<span class="string">"Transparent"</span> <span class="bracket">}</span>
+        <span class="keyword">Blend</span> SrcAlpha OneMinusSrcAlpha
+        
+        <span class="keyword">Pass</span>
+        <span class="bracket">{</span>
+            <span class="keyword">CGPROGRAM</span>
+            <span class="keyword">#pragma vertex</span> vert
+            <span class="keyword">#pragma fragment</span> frag
+            <span class="keyword">#include</span> <span class="string">"UnityCG.cginc"</span>
+            
+            <span class="keyword">struct</span> <span class="type">appdata</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> <span class="property">vertex</span> : <span class="keyword">POSITION</span>;
+                <span class="type">float2</span> <span class="property">uv</span> : <span class="keyword">TEXCOORD0</span>;
+            <span class="bracket">}</span>;
+            
+            <span class="keyword">struct</span> <span class="type">v2f</span>
+            <span class="bracket">{</span>
+                <span class="type">float4</span> <span class="property">pos</span> : <span class="keyword">SV_POSITION</span>;
+                <span class="type">float2</span> <span class="property">uv</span> : <span class="keyword">TEXCOORD0</span>;
+                <span class="type">float2</span> <span class="property">noiseUV</span> : <span class="keyword">TEXCOORD1</span>;
+            <span class="bracket">}</span>;
+            
+            <span class="keyword">sampler2D</span> <span class="property">_MainTex</span>;
+            <span class="keyword">sampler2D</span> <span class="property">_NoiseTex</span>;
+            <span class="type">float4</span> <span class="property">_MainTex_ST</span>;
+            <span class="type">fixed4</span> <span class="property">_Color</span>;
+            <span class="type">float2</span> <span class="property">_ScrollSpeed</span>;
+            <span class="type">float</span> <span class="property">_NoiseScale</span>;
+            <span class="type">float</span> <span class="property">_NoiseStrength</span>;
+            <span class="type">float</span> <span class="property">_PulseSpeed</span>;
+            
+            <span class="type">v2f</span> <span class="function">vert</span>(<span class="type">appdata</span> v)
+            <span class="bracket">{</span>
+                <span class="type">v2f</span> o;
+                o.<span class="property">pos</span> = <span class="function">UnityObjectToClipPos</span>(v.<span class="property">vertex</span>);
+                
+                <span class="comment">// 메인 텍스처 UV (스크롤링)</span>
+                <span class="type">float2</span> scrollOffset = <span class="property">_ScrollSpeed</span> * <span class="property">_Time</span>.<span class="property">y</span>;
+                o.<span class="property">uv</span> = <span class="function">TRANSFORM_TEX</span>(v.<span class="property">uv</span>, <span class="property">_MainTex</span>) + scrollOffset;
+                
+                <span class="comment">// 노이즈 텍스처 UV (다른 속도로 스크롤)</span>
+                o.<span class="property">noiseUV</span> = v.<span class="property">uv</span> * <span class="property">_NoiseScale</span> + <span class="property">_Time</span>.<span class="property">y</span> * <span class="number">0.5</span>;
+                
+                <span class="keyword">return</span> o;
+            <span class="bracket">}</span>
+            
+            <span class="type">fixed4</span> <span class="function">frag</span>(<span class="type">v2f</span> i) : <span class="keyword">SV_Target</span>
+            <span class="bracket">{</span>
+                <span class="comment">// 노이즈 샘플링</span>
+                <span class="type">fixed4</span> noise = <span class="function">tex2D</span>(<span class="property">_NoiseTex</span>, i.<span class="property">noiseUV</span>);
+                
+                <span class="comment">// 노이즈로 UV 왜곡</span>
+                <span class="type">float2</span> distortedUV = i.<span class="property">uv</span> + (noise.<span class="property">rg</span> - <span class="number">0.5</span>) * <span class="property">_NoiseStrength</span>;
+                
+                <span class="comment">// 메인 텍스처 샘플링</span>
+                <span class="type">fixed4</span> mainColor = <span class="function">tex2D</span>(<span class="property">_MainTex</span>, distortedUV);
+                
+                <span class="comment">// 펄스 효과 (시간에 따른 밝기 변화)</span>
+                <span class="type">float</span> pulse = (<span class="function">sin</span>(<span class="property">_Time</span>.<span class="property">y</span> * <span class="property">_PulseSpeed</span>) + <span class="number">1.0</span>) * <span class="number">0.5</span>;
+                
+                <span class="comment">// 최종 색상 계산</span>
+                <span class="type">fixed4</span> finalColor = mainColor * <span class="property">_Color</span>;
+                finalColor.<span class="property">rgb</span> *= (<span class="number">0.5</span> + pulse * <span class="number">0.5</span>); <span class="comment">// 펄스 적용</span>
+                finalColor.<span class="property">a</span> *= mainColor.<span class="property">a</span>;
+                
+                <span class="keyword">return</span> finalColor;
+            <span class="bracket">}</span>
+            
+            <span class="keyword">ENDCG</span>
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 이 셰이더의 특징:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>UV 스크롤링:</strong> 메인 텍스처가 지정된 방향으로 이동</li>
+                        <li><strong>노이즈 왜곡:</strong> 노이즈 텍스처로 UV를 왜곡하여 자연스러운 효과</li>
+                        <li><strong>펄스 효과:</strong> 시간에 따른 밝기 변화로 생동감 추가</li>
+                        <li><strong>투명도 지원:</strong> 알파 블렌딩으로 투명 효과</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ 성능 최적화 팁:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>텍스처 크기:</strong> 필요 이상으로 큰 텍스처 사용 금지</li>
+                        <li><strong>밉맵 사용:</strong> 거리에 따른 LOD로 성능 향상</li>
+                        <li><strong>압축 포맷:</strong> 플랫폼에 맞는 텍스처 압축 사용</li>
+                        <li><strong>배치 처리:</strong> 같은 텍스처를 사용하는 오브젝트 그룹화</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="lighting-models.html" class="nav-button prev">
+                    <i class="fas fa-chevron-left"></i>
+                    이전: 라이팅 모델
+                </a>
+                <a href="advanced-effects.html" class="nav-button">
+                    다음: 고급 효과
+                    <i class="fas fa-chevron-right"></i>
+                </a>
             </div>
         </div>
     </main>
