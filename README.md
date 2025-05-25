@@ -68,24 +68,12 @@ Unity Shader Programming/
 
 ## 🌐 사용법
 
-1. **로컬 서버 실행**:
-   ```bash
-   # Python 3
-   python -m http.server 8000
-   
-   # Python 2
-   python -m SimpleHTTPServer 8000
-   
-   # Node.js (http-server 패키지 필요)
-   npx http-server
+1. **브라우저에서 접속**:
+   ```
+   https://znlsnel.github.io/UDB/
    ```
 
-2. **브라우저에서 접속**:
-   ```
-   http://localhost:8000
-   ```
-
-3. **직접 파일 열기**:
+2. **직접 파일 열기**:
    - `index.html` 파일을 브라우저에서 직접 열어도 작동합니다.
 
 ## ✨ 주요 특징
