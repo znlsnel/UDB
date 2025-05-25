@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>셰이더 프로그래밍 소개 - Unity Shader Programming Guide</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .content-page {
+            background: white;
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            line-height: 1.8;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .page-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        .back-button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        .content-section {
+            margin-bottom: 3rem;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .subsection-title {
+            font-size: 1.4rem;
+            color: #444;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .concept-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .concept-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .concept-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .pipeline-diagram {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .pipeline-step {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+        .arrow {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin: 0 0.5rem;
+        }
+        .code-example {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', Monaco, 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            border: 1px solid #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .code-example .keyword {
+            color: #569cd6;
+            font-weight: 500;
+        }
+        .code-example .string {
+            color: #ce9178;
+        }
+        .code-example .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+        .code-example .type {
+            color: #4ec9b0;
+        }
+        .code-example .number {
+            color: #b5cea8;
+        }
+        .code-example .property {
+            color: #9cdcfe;
+        }
+        .code-example .bracket {
+            color: #ffd700;
+        }
+        .next-chapter {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .next-chapter h3 {
+            margin-bottom: 1rem;
+        }
+        .next-chapter a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .next-chapter a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-cube"></i>
+                    <span>Unity Shader Programming</span>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../index.html#about" class="nav-link">소개</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../index.html#contact" class="nav-link">문의</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="content-page">
+        <div class="content-container">
+            <a href="../index.html#table-of-contents" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                목차로 돌아가기
+            </a>
+            
+            <div class="page-header">
+                <h1 class="page-title">셰이더 프로그래밍 소개</h1>
+                <p class="page-subtitle">셰이더의 기본 개념과 Unity에서의 역할</p>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🎨 셰이더란 무엇인가?</h2>
+                
+                <p>셰이더(Shader)는 3D 그래픽스에서 <strong>물체의 외관을 결정하는 프로그램</strong>입니다. 간단히 말해, 화면에 보이는 모든 색상, 질감, 빛의 반사 등을 계산하는 작은 프로그램이라고 생각하면 됩니다.</p>
+
+                <div class="highlight-box">
+                    <strong>💡 쉬운 비유:</strong> 셰이더는 화가의 붓과 같습니다. 같은 3D 모델이라도 어떤 셰이더를 사용하느냐에 따라 금속처럼 반짝이게 만들 수도 있고, 나무처럼 거칠게 만들 수도 있습니다.
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4><i class="fas fa-palette"></i> 색상 결정</h4>
+                        <p>각 픽셀이 어떤 색상을 가질지 계산합니다.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-sun"></i> 빛 계산</h4>
+                        <p>빛이 물체에 어떻게 반사되고 굴절되는지 시뮬레이션합니다.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-cube"></i> 형태 변형</h4>
+                        <p>3D 모델의 정점 위치를 변경하여 애니메이션 효과를 만듭니다.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-magic"></i> 특수 효과</h4>
+                        <p>물, 불, 유리 등의 특별한 재질 효과를 구현합니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🔄 렌더링 파이프라인에서의 셰이더</h2>
+                
+                <p>3D 모델이 화면에 그려지는 과정을 <strong>렌더링 파이프라인</strong>이라고 합니다. 셰이더는 이 과정에서 핵심적인 역할을 담당합니다.</p>
+
+                <div class="pipeline-diagram">
+                    <div class="pipeline-step">3D 모델</div>
+                    <span class="arrow">→</span>
+                    <div class="pipeline-step">버텍스 셰이더</div>
+                    <span class="arrow">→</span>
+                    <div class="pipeline-step">래스터화</div>
+                    <span class="arrow">→</span>
+                    <div class="pipeline-step">프래그먼트 셰이더</div>
+                    <span class="arrow">→</span>
+                    <div class="pipeline-step">최종 이미지</div>
+                </div>
+
+                <h3 class="subsection-title">주요 셰이더 타입</h3>
+                
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4><i class="fas fa-dot-circle"></i> 버텍스 셰이더</h4>
+                        <p><strong>정점의 위치를 계산</strong>합니다. 3D 모델의 각 꼭짓점이 화면의 어디에 위치할지 결정합니다.</p>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                            <li>3D → 2D 좌표 변환</li>
+                            <li>애니메이션 효과</li>
+                            <li>변형 및 이동</li>
+                        </ul>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-fill"></i> 프래그먼트 셰이더</h4>
+                        <p><strong>각 픽셀의 색상을 계산</strong>합니다. 화면의 모든 점이 어떤 색깔을 가질지 결정합니다.</p>
+                        <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                            <li>색상 및 질감 적용</li>
+                            <li>빛과 그림자 계산</li>
+                            <li>특수 효과 구현</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🎮 Unity에서의 셰이더</h2>
+                
+                <p>Unity는 셰이더 개발을 쉽게 만들어주는 다양한 도구와 방법을 제공합니다.</p>
+
+                <h3 class="subsection-title">Unity 셰이더의 종류</h3>
+                
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4><i class="fas fa-layer-group"></i> 서피스 셰이더</h4>
+                        <p>Unity에서 제공하는 <strong>고수준 셰이더</strong>입니다. 복잡한 라이팅 계산을 자동으로 처리해줍니다.</p>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                            ✅ 초보자 추천 | ✅ 빠른 개발 | ✅ 자동 라이팅
+                        </div>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-code"></i> 언릿 셰이더</h4>
+                        <p><strong>완전한 제어</strong>가 가능한 저수준 셰이더입니다. 모든 것을 직접 구현해야 하지만 자유도가 높습니다.</p>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                            🔥 고급자용 | 🔥 완전한 제어 | 🔥 최적화 가능
+                        </div>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-paint-brush"></i> Shader Graph</h4>
+                        <p><strong>노드 기반 비주얼 에디터</strong>입니다. 코딩 없이도 셰이더를 만들 수 있습니다.</p>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                            🎨 비주얼 편집 | 🎨 직관적 | 🎨 실시간 미리보기
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">간단한 셰이더 예제</h3>
+                
+                <p>다음은 Unity에서 가장 기본적인 셰이더의 구조입니다:</p>
+
+                <div class="code-example">
+<span class="keyword">Shader</span> <span class="string">"Custom/MyFirstShader"</span>
+<span class="bracket">{</span>
+    <span class="keyword">Properties</span>
+    <span class="bracket">{</span>
+        <span class="property">_MainTex</span> <span class="bracket">(</span><span class="string">"Texture"</span>, <span class="type">2D</span><span class="bracket">)</span> = <span class="string">"white"</span> <span class="bracket">{}</span>
+        <span class="property">_Color</span> <span class="bracket">(</span><span class="string">"Color"</span>, <span class="type">Color</span><span class="bracket">)</span> = <span class="bracket">(</span><span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span><span class="bracket">)</span>
+    <span class="bracket">}</span>
+    
+    <span class="keyword">SubShader</span>
+    <span class="bracket">{</span>
+        <span class="keyword">Tags</span> <span class="bracket">{</span> <span class="string">"RenderType"</span>=<span class="string">"Opaque"</span> <span class="bracket">}</span>
+        
+        <span class="keyword">Pass</span>
+        <span class="bracket">{</span>
+            <span class="keyword">CGPROGRAM</span>
+            <span class="keyword">#pragma</span> <span class="type">vertex</span> <span class="property">vert</span>
+            <span class="keyword">#pragma</span> <span class="type">fragment</span> <span class="property">frag</span>
+            
+            <span class="comment">// 여기에 셰이더 코드가 들어갑니다</span>
+            
+            <span class="keyword">ENDCG</span>
+        <span class="bracket">}</span>
+    <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>🔍 코드 설명:</strong>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>Properties:</strong> 인스펙터에서 조절할 수 있는 변수들</li>
+                        <li><strong>SubShader:</strong> 실제 셰이더 구현부</li>
+                        <li><strong>Pass:</strong> 렌더링 단계 (한 번의 그리기 과정)</li>
+                        <li><strong>CGPROGRAM:</strong> 셰이더 코드 시작</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">🚀 셰이더로 할 수 있는 것들</h2>
+                
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4><i class="fas fa-water"></i> 자연 현상</h4>
+                        <p>물의 파도, 불꽃, 연기, 구름 등의 자연스러운 효과를 구현할 수 있습니다.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-gem"></i> 재질 표현</h4>
+                        <p>금속, 유리, 플라스틱, 천 등 다양한 재질의 특성을 사실적으로 표현할 수 있습니다.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-magic"></i> 특수 효과</h4>
+                        <p>홀로그램, 디졸브, 아웃라인, 글로우 등의 게임에서 자주 사용되는 효과들을 만들 수 있습니다.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-palette"></i> 스타일화</h4>
+                        <p>툰 셰이딩, 픽셀 아트 스타일 등 독특한 아트 스타일을 구현할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-title">📚 학습 로드맵</h2>
+                
+                <p>셰이더 프로그래밍을 효과적으로 학습하기 위한 단계별 가이드입니다:</p>
+
+                <div style="margin: 2rem 0;">
+                    <div style="display: flex; align-items: center; margin: 1rem 0; padding: 1rem; background: #f0f9ff; border-radius: 8px;">
+                        <div style="background: #667eea; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-weight: bold;">1</div>
+                        <div>
+                            <strong>기초 개념 이해</strong><br>
+                            <span style="color: #666;">렌더링 파이프라인, 좌표계, 벡터 수학의 기본</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; margin: 1rem 0; padding: 1rem; background: #f0f9ff; border-radius: 8px;">
+                        <div style="background: #667eea; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-weight: bold;">2</div>
+                        <div>
+                            <strong>HLSL 문법 학습</strong><br>
+                            <span style="color: #666;">변수, 함수, 내장 함수들의 사용법</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; margin: 1rem 0; padding: 1rem; background: #f0f9ff; border-radius: 8px;">
+                        <div style="background: #667eea; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-weight: bold;">3</div>
+                        <div>
+                            <strong>간단한 셰이더 제작</strong><br>
+                            <span style="color: #666;">색상 변경, 텍스처 적용, 기본 애니메이션</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; margin: 1rem 0; padding: 1rem; background: #f0f9ff; border-radius: 8px;">
+                        <div style="background: #667eea; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-weight: bold;">4</div>
+                        <div>
+                            <strong>라이팅과 재질</strong><br>
+                            <span style="color: #666;">빛의 계산, PBR, 다양한 재질 표현</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; margin: 1rem 0; padding: 1rem; background: #f0f9ff; border-radius: 8px;">
+                        <div style="background: #667eea; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; font-weight: bold;">5</div>
+                        <div>
+                            <strong>고급 기법과 최적화</strong><br>
+                            <span style="color: #666;">컴퓨트 셰이더, 포스트 프로세싱, 성능 최적화</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="next-chapter">
+                <h3><i class="fas fa-arrow-right"></i> 다음 단계</h3>
+                <p>이제 셰이더의 기본 개념을 이해했으니, HLSL 문법과 Unity 셰이더 구조를 자세히 알아보겠습니다.</p>
+                <a href="shader-basics.html">
+                    <i class="fas fa-code"></i>
+                    셰이더 기초 문법 학습하기
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+</body>
+</html> 

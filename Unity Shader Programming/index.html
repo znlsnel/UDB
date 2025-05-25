@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unity Shader Programming Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-cube"></i>
+                    <span>Unity Shader Programming</span>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link">소개</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link">문의</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="hero-section" id="home">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Unity Shader Programming</h1>
+                    <p class="hero-subtitle">유니티 셰이더 프로그래밍의 모든 것을 배워보세요</p>
+                    <div class="hero-description">
+                        <p>기초부터 고급 기법까지, 단계별로 학습할 수 있는 완전한 가이드입니다.</p>
+                    </div>
+                    <a href="#table-of-contents" class="cta-button">
+                        <i class="fas fa-play"></i>
+                        학습 시작하기
+                    </a>
+                </div>
+                <div class="hero-visual">
+                    <div class="shader-demo">
+                        <div class="cube-container">
+                            <div class="cube">
+                                <div class="face front"></div>
+                                <div class="face back"></div>
+                                <div class="face right"></div>
+                                <div class="face left"></div>
+                                <div class="face top"></div>
+                                <div class="face bottom"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="table-of-contents-section" id="table-of-contents">
+            <div class="container">
+                <h2 class="section-title">학습 목차</h2>
+                <p class="section-subtitle">체계적인 학습을 위한 단계별 커리큘럼</p>
+                
+                <div class="toc-grid">
+                    <!-- 기초 과정 -->
+                    <div class="toc-category">
+                        <h3 class="category-title">
+                            <i class="fas fa-seedling"></i>
+                            기초 과정
+                        </h3>
+                        <div class="toc-items">
+                            <a href="pages/introduction.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>셰이더 프로그래밍 소개</h4>
+                                    <p>셰이더의 기본 개념과 Unity에서의 역할</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                            
+                            <a href="pages/shader-basics.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>셰이더 기초 문법</h4>
+                                    <p>HLSL 기본 문법과 Unity 셰이더 구조</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                            
+                            <a href="pages/vertex-fragment.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>버텍스 & 프래그먼트 셰이더</h4>
+                                    <p>렌더링 파이프라인의 핵심 단계 이해</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 중급 과정 -->
+                    <div class="toc-category">
+                        <h3 class="category-title">
+                            <i class="fas fa-layer-group"></i>
+                            중급 과정
+                        </h3>
+                        <div class="toc-items">
+                            <a href="pages/lighting-models.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>라이팅 모델</h4>
+                                    <p>Lambert, Phong, PBR 라이팅 구현</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                            
+                            <a href="pages/textures-sampling.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>텍스처와 샘플링</h4>
+                                    <p>텍스처 매핑과 다양한 샘플링 기법</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                            
+                            <a href="pages/surface-shaders.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-paint-brush"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>서피스 셰이더</h4>
+                                    <p>Unity의 서피스 셰이더 작성법</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 고급 과정 -->
+                    <div class="toc-category">
+                        <h3 class="category-title">
+                            <i class="fas fa-rocket"></i>
+                            고급 과정
+                        </h3>
+                        <div class="toc-items">
+                            <a href="pages/compute-shaders.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-microchip"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>컴퓨트 셰이더</h4>
+                                    <p>GPU 병렬 처리와 컴퓨트 셰이더 활용</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                            
+                            <a href="pages/post-processing.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-magic"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>포스트 프로세싱</h4>
+                                    <p>화면 효과와 이미지 처리 기법</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                            
+                            <a href="pages/optimization.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>성능 최적화</h4>
+                                    <p>셰이더 최적화 기법과 성능 분석</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 실전 프로젝트 -->
+                    <div class="toc-category">
+                        <h3 class="category-title">
+                            <i class="fas fa-tools"></i>
+                            실전 프로젝트
+                        </h3>
+                        <div class="toc-items">
+                            <a href="pages/water-shader.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-water"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>물 셰이더 제작</h4>
+                                    <p>실시간 물 표면 시뮬레이션</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                            
+                            <a href="pages/toon-shader.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-palette"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>툰 셰이더 제작</h4>
+                                    <p>NPR 스타일의 카툰 렌더링</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                            
+                            <a href="pages/particle-effects.html" class="toc-item">
+                                <div class="item-icon">
+                                    <i class="fas fa-sparkles"></i>
+                                </div>
+                                <div class="item-content">
+                                    <h4>파티클 이펙트</h4>
+                                    <p>고급 파티클 시스템과 셰이더</p>
+                                </div>
+                                <div class="item-arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section" id="about">
+            <div class="container">
+                <h2 class="section-title">이 가이드에 대해</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Unity Shader Programming Guide는 게임 개발자와 그래픽 프로그래머를 위한 종합적인 셰이더 학습 자료입니다.</p>
+                        <p>기초부터 고급 기법까지 단계별로 구성되어 있어, 초보자도 쉽게 따라할 수 있습니다.</p>
+                    </div>
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h4>체계적 학습</h4>
+                            <p>기초부터 고급까지 단계별 커리큘럼</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-code"></i>
+                            <h4>실습 중심</h4>
+                            <p>이론과 실습을 병행한 학습</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-project-diagram"></i>
+                            <h4>실전 프로젝트</h4>
+                            <p>실무에 바로 적용 가능한 프로젝트</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Unity Shader Programming Guide. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
