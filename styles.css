@@ -185,6 +185,7 @@ body {
 
 .shader-demo {
     perspective: 1000px;
+    transform-origin: center center;
 }
 
 .cube-container {
