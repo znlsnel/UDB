@@ -58,9 +58,7 @@ jspm_packages/
 tmp/
 temp/
 
-# Build outputs
 dist/
-build/
 
 # Cache files
 .cache/
